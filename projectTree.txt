@@ -1,0 +1,95 @@
+.
+├── App.js
+├── README.md
+├── Src
+│   ├── Components
+│   │   ├── RegMail.jsx
+│   │   ├── RegName.jsx
+│   │   ├── RegPassword.jsx
+│   │   ├── RegRecycPrefs.jsx
+│   │   └── SignInBtn.jsx
+│   ├── Context
+│   │   ├── ContextProvider.jsx
+│   │   └── UserContext.jsx
+│   ├── Data
+│   └── Screens
+│       ├── Login.jsx
+│       ├── OnBoarding.jsx
+│       ├── PersonalProfile.jsx
+│       ├── RegNewAccount.jsx
+│       ├── SignInScreen.jsx
+│       └── Splash.jsx
+├── app.json
+├── assets
+│   ├── adaptive-icon.png
+│   ├── favicon.png
+│   ├── fonts
+│   │   ├── OpenSans-Italic-VariableFont_wdth,wght.ttf
+│   │   ├── OpenSans-VariableFont_wdth,wght.ttf
+│   │   ├── Open_Sans
+│   │   │   ├── OFL.txt
+│   │   │   └── README.txt
+│   │   └── static
+│   │       ├── OpenSans-Bold.ttf
+│   │       ├── OpenSans-BoldItalic.ttf
+│   │       ├── OpenSans-ExtraBold.ttf
+│   │       ├── OpenSans-ExtraBoldItalic.ttf
+│   │       ├── OpenSans-Italic.ttf
+│   │       ├── OpenSans-Light.ttf
+│   │       ├── OpenSans-LightItalic.ttf
+│   │       ├── OpenSans-Medium.ttf
+│   │       ├── OpenSans-MediumItalic.ttf
+│   │       ├── OpenSans-Regular.ttf
+│   │       ├── OpenSans-SemiBold.ttf
+│   │       ├── OpenSans-SemiBoldItalic.ttf
+│   │       ├── OpenSans_Condensed-Bold.ttf
+│   │       ├── OpenSans_Condensed-BoldItalic.ttf
+│   │       ├── OpenSans_Condensed-ExtraBold.ttf
+│   │       ├── OpenSans_Condensed-ExtraBoldItalic.ttf
+│   │       ├── OpenSans_Condensed-Italic.ttf
+│   │       ├── OpenSans_Condensed-Light.ttf
+│   │       ├── OpenSans_Condensed-LightItalic.ttf
+│   │       ├── OpenSans_Condensed-Medium.ttf
+│   │       ├── OpenSans_Condensed-MediumItalic.ttf
+│   │       ├── OpenSans_Condensed-Regular.ttf
+│   │       ├── OpenSans_Condensed-SemiBold.ttf
+│   │       ├── OpenSans_Condensed-SemiBoldItalic.ttf
+│   │       ├── OpenSans_SemiCondensed-Bold.ttf
+│   │       ├── OpenSans_SemiCondensed-BoldItalic.ttf
+│   │       ├── OpenSans_SemiCondensed-ExtraBold.ttf
+│   │       ├── OpenSans_SemiCondensed-ExtraBoldItalic.ttf
+│   │       ├── OpenSans_SemiCondensed-Italic.ttf
+│   │       ├── OpenSans_SemiCondensed-Light.ttf
+│   │       ├── OpenSans_SemiCondensed-LightItalic.ttf
+│   │       ├── OpenSans_SemiCondensed-Medium.ttf
+│   │       ├── OpenSans_SemiCondensed-MediumItalic.ttf
+│   │       ├── OpenSans_SemiCondensed-Regular.ttf
+│   │       ├── OpenSans_SemiCondensed-SemiBold.ttf
+│   │       └── OpenSans_SemiCondensed-SemiBoldItalic.ttf
+│   ├── icon.png
+│   ├── icons
+│   │   ├── BinEmptying.png
+│   │   ├── CartUsingShoppingList.png
+│   │   ├── DaysUsingApp.png
+│   │   ├── EditProfileImageIcon.png
+│   │   ├── ExperienceIconFlame.png
+│   │   ├── ImageIcon.png
+│   │   ├── SettingsCogwheel.png
+│   │   ├── envelopIcon.png
+│   │   ├── eyeCrossIcon.png
+│   │   ├── profilePicture.png
+│   │   ├── recycliSTGlowLSmall.png
+│   │   ├── recycliSTLogo113.png
+│   │   ├── recycliSTSplashLogo.png
+│   │   ├── smart-listiings_1.png
+│   │   ├── smart-shopping_2.png
+│   │   └── stop-plastic-bags_3.png
+│   └── splash.png
+├── babel.config.js
+├── node_modules
+├── package-lock.json
+├── package.json
+├── projectTree.txt
+└── recyclist.txt
+
+12 directories, 81 files

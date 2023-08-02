@@ -1,76 +1,151 @@
-import { View, Text, TextInput, Button, Alert } from 'react-native'
+import { View, Text, TextInput, Alert, StyleSheet, Image, Pressable, Switch, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
+import { useNavigation } from '@react-navigation/native'
+
+
+// import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
 
 export default function Login() {
 	const [inputEmail, SetInputEmail] = useState('');
 	const [inputPassword, SetInputPassword] = useState('');
-	const [confirmPassword, SetConfirmPassword] = useState('');
+	const [switchEnabled, SetSwitchEnabled] = useState(true);
 
-	function checkCredintials(){
+	const onToggleSwitch = () => { SetSwitchEnabled(previousState => !previousState) };
+	const navigation = useNavigation();
 
-		let tempEmail = "g@goog.com";
-		let tempPassword = "qwerty!234";
-
-
-		if (inputEmail == tempEmail && inputPassword === pword ){
-			console.log("email and password ok!!!");
-
-		} 
-		else if (inputEmail == tempEmail || inputPassword === pword ) {
-			console.log("email or password combination doesn't match.");
-		}
-
-		
+	const resetPassword = () => {
+		Alert.alert('Resetting password');
+	}
+	const submitDetails = () => {
+		Alert.alert("details submitted")
 	}
 	return (
-		<View style={{ paddin: 50 }}>
-			<Text>recycliST (logo)</Text>
-			<Text>{"\n"}</Text>
-			<Text>סת אלמנקום ניסי נון ניבאה.</Text>
-			<Text>Login</Text>
-			<Text>הרשמה במייל</Text>
-			<Text>משתמש קיים? הכנס</Text>
+		<View style={styles.container}>
+			<TouchableOpacity onLongPress={() => navigation.navigate('SignInScreen')}>
+				<Image
+					style={styles.splashLogo} resizeMode='contain' source={require('../../assets/icons/recycliSTLogo113.png')} />
+			</TouchableOpacity>
+			<View style={styles.content}>
+				<Text style={styles.boldCentered16}>התחבר/י לצורך כניסה</Text>
 
-			<Text>{"\n"}כתובת אי מייל</Text>
-			<TextInput
-				onChangeText={(email)=> {SetInputEmail(email)}}
-				value='inputEmail'
-				keyboardType="email-address"
-			/>
-			<Text>{"\n"}סיסמה</Text>
-			<TextInput
-				onChangeText={(pword)=> {SetInputPassword(pword)}}
-				value='inputPassword'
-				keyboardType="visible-password"
-			/>
+				<Text style={styles.regular15}>כתובת אי מייל</Text>
+				<View style={styles.InputContainer}>
+					<Image source={require('../../assets/icons/envelopIcon.png')} style={styles.iconStyle} />
+					<TextInput
+						style={styles.inputBox}
+						onChangeText={(email) => { SetInputEmail(email) }}
+						value={inputEmail}
+						keyboardType="email-address"
+					/>
+				</View>
+				<Text style={styles.regular15}>{"\n"}סיסמה</Text>
+				<View style={styles.InputContainer}>
+					<Image source={require('../../assets/icons/eyeCrossIcon.png')} style={styles.iconStyle} />
+					<TextInput
+						onChangeText={(password) => { SetInputPassword(password) }}
 
-			{/*
-			<Text>{"\n"}אישור סיסמה</Text>
-			<TextInput
-				onChangeText={(cPword)=>{SetConfirmPassword(cPword)}}
-				value='confirmPassword'
-				keyboardType="visible-password"
-			/>
-			*/}
-			<Button title="הבא>>" onPress={checkCredintials} />
+						style={styles.inputBox}
+						value={inputPassword}
+						keyboardType="visible-password"
+					// secureTextEntry
+					/>
+				</View>
 
-			<Button title="אתחל סיסמה>>" onPress={resetPassword} />
+				<View style={styles.detailOptions}>
+					<Pressable onPress={resetPassword} >
+						<Text style={styles.regularWhiteUnderscore14}>איפוס סיסמה</Text>
+					</Pressable>
+					<View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
+						<Switch value={switchEnabled}
+							onValueChange={onToggleSwitch}
+							ios_backgroundColor={'#424B5A'}
+							style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
+						/>
+						<Text style={{ fontFamily: 'openSansBold', color: '#fff', marginRight: 5, }}>זכור אותי</Text>
+					</View>
+				</View>
+				<Pressable onPress={submitDetails} style={styles.regRegistr}  >
+					<Text style={styles.BtnText}>הבא</Text>
+				</Pressable>
 
-			<Text>{"\n"}</Text>
-
-			<Text>או הכנס באמצעות</Text>
-
-			{/* Google Identity Services for Web */}
-			<Button title="Google" onPress={() => Alert.alert('Login with google  pressed')} />
-			{/* Apple ID support */}
-			<Button title="Apple ID" onPress={() => Alert.alert('Login with Apple ID pressed')} />
-
-
+			</View>
 		</View>
 	)
 }
 
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: '#6d8fe6',
+		alignItems: 'center',
+		//justifyContent: 'center'
+	},
+	splashLogo: {
+		marginTop: '15%',
+		marginBottom: 15,
+	},
+	content: {
 
-{/* 
-ממשק המשתמש שלשמה המערכת ממשק סביבתית המכונית באנגלית נועדה המשתמש, כולל אדם שתנאי במכונית מכונה מתקיים לפני הקשר מערכות בעת. המערכת הוא פשוטים משתמש או בהנדסת שנועדו מממשק על חלק, להשפיע החלק עמם מתעסק ממשק המשתמש עשויים בה בקיצור תוכנה. הוא ממשק המשימה. הנהיגה ממשק החשופים מכיל חלקה הגה היו, ממשק של או המושג רקע וממשק המהפכה משתמש מלבד ממשק. ממשקמשתמש הצמיגים שהנהג משתמש התעשייתית שטח חלק גם של לבין, כל הפעולה ממשק המכונית כך הרדיו המערכת מערכת המשתמש קיימים. מערכת פני חפץ מושג לשימושו כלשהו החשוף הפעולה של את, מכיל את שדרכו שמקורו המערכת בהקשר ממשק להשפעה חלקי הסביבה. המכשירים לדוגמה בין המראות והחלונות זה מוט מרבית היא דוושות, החלקים מכשיר הסביבה פעולתו המבצע למשתמש של ומממשק לחצני הסביבה. 
-*/}
+		// alignItems: 'center'
+	},
+	InputContainer: {
+		flexDirection: 'row',
+		alignItems: 'center', //doens't help much
+		marginBottom: -10,
+	},
+	iconStyle: {
+		zIndex: 2,
+		marginLeft: 20,
+
+	},
+	inputBox: {
+		zIndex: 1,
+		height: 40,
+		backgroundColor: '#D9D9D9',
+		width: 330,
+		marginLeft: -40,
+		paddingLeft: 45,
+
+	},
+	boldCentered16: {
+		fontFamily: 'openSansBold',
+		fontSize: 16,
+		textAlign: 'center',
+		marginBottom: 10,
+	},
+	regular15: {
+		fontFamily: 'openSansReg',
+		fontSize: 15,
+		textAlign: 'right',
+		marginBottom: 3,
+	},
+	regularWhiteUnderscore14: {
+		textDecorationLine: 'underline',
+		fontFamily: 'openSansReg',
+		fontSize: 14,
+		color: '#fff',
+		marginLeft: 12,
+	},
+	regRegistr: {
+		// alignItems:'center',
+		// justifyContent:'center',
+		backgroundColor: '#fff',
+		width: 221,
+		height: 39,
+		alignItems: 'center',
+		justifyContent: 'center',//that's wont basline elements
+		borderRadius: 5.22,
+		alignSelf: 'center',
+		marginTop: 20,
+	},
+	BtnText: {
+		fontFamily: 'openSansBold',
+		fontSize: 16,
+	},
+	detailOptions: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		marginTop: 25,
+	}
+})
