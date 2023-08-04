@@ -85,8 +85,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#FFFEFE',
 	},
-	content: { //that exclude logo and botton
-		
+	content: { //that exclude logo and botton		
 		height:'60%',
 	},
 	infoDiv: {
@@ -113,26 +112,15 @@ const styles = StyleSheet.create({
 		marginTop: factor*0.01,
 		// justifyContent:'space-evenly',
 	},
-	onBoardingImage: {
-		// zIndex:2,
-		// width: width*1.5,
-		transform: [{scale: height*0.0014}]
-
-		
+	onBoardingImage: {	
+		transform: [{scale: height*0.0014}]		
 	},
-
 	btnsView: { //that's not text!!
 		flex: 1,
 		flexDirection: 'row-reverse',
 		alignItems: 'center',
-		// width: '100%',
-		// height:'100%',
-		justifyContent: 'center',
-
-		
+		justifyContent: 'center',		
 	},
-
-
 	nextBoard: {//that's not text!! that's the blue botton itself
 		borderColor: '#074EE8',
 		borderWidth: 2.2,

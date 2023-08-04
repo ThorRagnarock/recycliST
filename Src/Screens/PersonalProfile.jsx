@@ -1,10 +1,13 @@
 import { View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Animated, Alert, TextInput, Platform } from 'react-native'
 import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import {Picker} from '@react-native-picker/picker'; //option-select menu
 import { LinearGradient } from 'expo-linear-gradient';
+
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { UserContext2 } from '../Context/ContextProvider';
+import FloatingOptionPicker, {floatingOptionPicker} from '../Components/FloatingOptionPicker'
 
 export default function PersonalProfile() {
 
@@ -14,7 +17,9 @@ export default function PersonalProfile() {
 	const [Editing, SetEditing] = useState(false);
 
 	const StartEdit = () => { SetEditing(true); Alert.alert("start editing") }
-	const ConcludeEdit = () => { SetEditing(false); Alert.alert("done editing") }
+	const ConcludeEdit = () => { SetDatePickerSwitch(false);
+		SetOptionPicker(false);
+		SetEditing(false); Alert.alert("done editing") }
 
 
 	const [subscribeDate, SetSubscriberDate] = useState(mockupSubscribeDate); //new Date()
@@ -29,7 +34,7 @@ export default function PersonalProfile() {
 	const settingPressed = () => {
 		Alert.alert("settings!")
 	}
-	const [status, SetStatus] = useState('');
+	const [status, SetStatus] = useState('מצבך המשפחתי');// that's what's up
 	const [birthDate, SetBirthDate] = useState(null);
 	const [formData, SetFormData] = useState({
 		email: email,
@@ -45,6 +50,25 @@ export default function PersonalProfile() {
 	const [textVisible, SetTextVisible] = useState(false);
 	const timeRef = React.useRef(null);
 	const [animatedFadeout] = useState(new Animated.Value(1));
+
+	/////////// birthday date gadget thingie //////
+	// const [date, SetDate] = useState(new Date(null));
+	const [datePickerSwitch, SetDatePickerSwitch] = useState(false);
+	const [optionPicker, SetOptionPicker] =useState(false);
+	const dateEventChange = (event, selectedDate) => {
+		const currentDate = selectedDate || birthDate;
+		SetDatePickerSwitch(Platform.OS === 'ios');
+		SetBirthDate(currentDate);
+		// SetDatePickerSwitch(false);
+	}
+	const dateFormatter = birthDate ? `${('0' + (birthDate.getDate())).slice(-2)}/${('0' + (birthDate.getMonth() + 1)).slice(-2)}/${birthDate.getFullYear()}` : "00/00/0000";
+	const minAge = new Date();
+	const maxAge = new Date();
+	minAge.setFullYear(minAge.getFullYear()-8); //that should be minimum AGE
+	maxAge.setFullYear(maxAge.getFullYear()-120);
+
+	const [datePressableOn, SetDatePressableOn] = useState(false);
+
 
 	const handleLongPress = () => {
 		SetTextVisible(true);
@@ -134,37 +158,82 @@ export default function PersonalProfile() {
 								<Text style={styles.addressSubtitle}>מס׳</Text>
 							</View>
 						</View>
+						{/** So far address View */}
+
 						<View style={styles.personalDetails}>
-							{/* birthdate, status, password, email (that order)*/}
+
 							<View style={[styles.verticalFormItem, styles.dateItem]}>
 								<Pressable
-									style={[styles.textBoxStyle, { width: 210, height: 20 }]}>
-
-									<Text style={styles.placeHolderText}>date of some sort</Text>
-
+									style={[styles.textBoxStyle, { width: 210, height: 20 }]}
+									onPress={() => { SetDatePickerSwitch(true); }}  //SetDatePressableOn(true); 
+									disabled={!Editing}
+								>
+									<Text style={[styles.placeHolderText, { textAlign: 'center' }]}>{dateFormatter}</Text>
+									{(datePickerSwitch) &&
+										(<DateTimePicker
+											testID='dateTimePicker'
+											value={birthDate ? birthDate : new Date()}
+											mode='date'
+											display='default'
+											onChange={dateEventChange}
+											maximumDate={minAge}
+											minimumDate={maxAge}
+										/>
+										)}
 								</Pressable>
 								<Text style={styles.generalSubtitle}>תאריך לידה</Text>
 							</View>
+
+
 							<View style={[styles.verticalFormItem, styles.null]}>
-							<TextInput
-									style={[styles.textBoxStyle, {width:210}]}
-									// placeholder='###'
-									value={residence.city}
-									editable={Editing}
-									onChangeText={text => SetResidence(pervResidence => ({ ...pervResidence, city: text }))}
-								/>
+								<Pressable
+									style={[styles.textBoxStyle, { width: 210 }]}
+									value={status}
+									disabled={!Editing}
+									onPress={() => SetOptionPicker(true)}
+								>
+									<Text style={[styles.placeHolderText, { textAlign: 'center' }]}>{status}</Text>
+								</Pressable>
+								<FloatingOptionPicker status={status} SetStatus={SetStatus} optionPicker={optionPicker} SetOptionPicker={SetOptionPicker} style={{zIndex:9999}}/>
+								
 								<Text style={styles.generalSubtitle}>סטטוס אישי</Text>
 
 							</View>
+							<View style={[styles.verticalFormItem, {zIndex:1}]}>
+								<TextInput
+									style={[styles.textBoxStyle, { width: 210 }]}
+									value={password}
+									editable={Editing}
+									onChangeText={() => Alert.alert('change has been made')}
+								/>
+								<Text style={styles.generalSubtitle}>סיסמה</Text>
+							</View>
+
+							{/*so the problem is not with the email... maybe the date thing  */}
+							<View style={[styles.verticalFormItem, {zIndex:1}]}>
+								<TextInput
+									style={[styles.textBoxStyle, { width: 210 }]}
+									value={email}
+									editable={Editing}
+									onChangeText={() => Alert.alert('change has been made')}
+								/>
+								<Text style={styles.generalSubtitle}>אימייל</Text>
+							</View>
+							{/* 
+							TODO: Date Select(done)
+							Option Select
+							*/}
+
+
 
 						</View>
 					</View>
 				</View>
 			</LinearGradient>
+			
 		</View>
 	)
 }
-
 const styles = StyleSheet.create({
 	backgroundGradient: {
 		flex: 1,
@@ -228,23 +297,57 @@ const styles = StyleSheet.create({
 		alignItems: 'flex-end',
 		flexDirection: 'column'
 	},
+	nameAndGreeting:{
+		alignItems:'center',
+		marginTop:10,
+	},
 	textBoxStyle: {
+		// zIndex:-1,
+
 		backgroundColor: '#d9d9d9',
 		padding: 1,
 		textAlign: 'right',
 		borderColor: '#ccc',
 		borderWidth: 1,
-
+	},
+	
+	personalDetails:{
+		// position:'relative',
+		// zIndex:1,
 
 	},
+	floatingOptionPicker: {
+		position:'absolute',
+		zIndex:9999,
+		bottom:300,
+		left:30,
+		backgroundColor:'white',
+		width:'80%',
+		alignSelf:'center',
+	},
 	verticalFormItem: {
+		zIndex:2,
 		flexDirection: 'row',
 		textAlign: 'right',
 		justifyContent: 'flex-end',
 		justifyContent: 'space-between',
-		marginTop: 20,
+		marginTop: 30,
 
 	},
 })
 //background: linear-gradient(180deg, rgba(161, 178, 166, 0.75) 0%, rgba(255, 255, 255, 0.00) 88.99%);
 
+{/* <View style={[styles.floatingOptionPicker, {}]}>
+									{
+										optionPicker &&
+										<Picker
+											selectedValue={status}
+											onValueChange={(itemValue, itemIndex) => SetStatus(itemValue)}>
+											<Picker.Item label='רווק/ה' value={'רווק/ה'} />
+											<Picker.Item label='גרוש/ה' value={'גרוש/ה'} />
+											<Picker.Item label='נשוי/נשואה' value={'נשוי/נשואה'} />
+											<Picker.Item label='אלמן/ה' value={'אלמן/ה'} />
+											<Picker.Item label='מעדיף/ה שלא לשתף' value={'מעדיף/ה שלא לשתף'} />
+										</Picker>
+									}
+								</View> */}

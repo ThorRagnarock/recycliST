@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native'
 import React, { useState, createContext } from 'react'
 // import UserContext from './UserContext'
 
