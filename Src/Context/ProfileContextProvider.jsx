@@ -5,12 +5,13 @@ export const UserProfileContext = createContext();
 export default function ProfileContextProvider({ profileChildren }) {
 
 	const [email, SetEmail] = useState('');
-	const [subscribeDate, SetSubscribeDate] = useState(new Date());//current registry date
+	const [subscribeDate, SetSubscribeDate] = useState(new Date());// registry date
 	const [password, SetPassword] = useState('');
 	const [name, SetName] = useState('');
 	const [profileImage, SetProfileImage] = useState(null);//profile image
 	const [recycPrefs, SetRecycPrefs] = useState(null);
 	const [birthdate, SetBirthdate] = useState(null);
+	const [residence, SetResidence] = useState({ city:'', street:'', streetNum:'' });
 	const [status, SetStatus] = useState('');
 
 	////

@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Animated, Alert, TextInput, Platform } from 'react-native'
 import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import {Picker} from '@react-native-picker/picker'; //option-select menu
 import { LinearGradient } from 'expo-linear-gradient';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -335,19 +334,4 @@ const styles = StyleSheet.create({
 
 	},
 })
-//background: linear-gradient(180deg, rgba(161, 178, 166, 0.75) 0%, rgba(255, 255, 255, 0.00) 88.99%);
-
-{/* <View style={[styles.floatingOptionPicker, {}]}>
-									{
-										optionPicker &&
-										<Picker
-											selectedValue={status}
-											onValueChange={(itemValue, itemIndex) => SetStatus(itemValue)}>
-											<Picker.Item label='רווק/ה' value={'רווק/ה'} />
-											<Picker.Item label='גרוש/ה' value={'גרוש/ה'} />
-											<Picker.Item label='נשוי/נשואה' value={'נשוי/נשואה'} />
-											<Picker.Item label='אלמן/ה' value={'אלמן/ה'} />
-											<Picker.Item label='מעדיף/ה שלא לשתף' value={'מעדיף/ה שלא לשתף'} />
-										</Picker>
-									}
-								</View> */}
+// import {Picker} from '@react-native-picker/picker'; //option-select menu
