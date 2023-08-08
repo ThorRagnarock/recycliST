@@ -19,6 +19,8 @@ import OnBoarding from './Src/Screens/OnBoarding';
 import SignInScreen from './Src/Screens/SignInScreen';
 import RegNewAccount from './Src/Screens/RegNewAccount';
 import PersonalProfile from './Src/Screens/PersonalProfile';
+// import ListScreen from './Src/Screens/ListScreen';
+import ListsMan from './Src/Screens/ListsMan';
 
 // SplashScreen.preventAutoHideAsync();
 // const navigation  = useNavigation();
@@ -36,7 +38,7 @@ export default function App() {
   return (
     <ContextProvider>
       <NavigationContainer>
-        <NavStack.Navigator initialRouteName='splash' screenOptions={{ headerShown: false }}>
+        <NavStack.Navigator initialRouteName='PersonalProfile' screenOptions={{ headerShown: false }}>
         {/* PersonalProfile */}
           <NavStack.Screen name='Splash' component={Splash} />
           <NavStack.Screen name='OnBoarding' component={OnBoarding} />
@@ -44,7 +46,8 @@ export default function App() {
           <NavStack.Screen name='Login' component={Login} />
           <NavStack.Screen name='RegNewAccount' component={RegNewAccount} />
           <NavStack.Screen name='PersonalProfile' component={PersonalProfile} />
-
+          {/* <NavStack.Screen name='ListScreen' component={ListScreen}/>*/}
+          <NavStack.Screen name='ListsMan' component={ListsMan}/> 
         </NavStack.Navigator>
 
       </NavigationContainer>

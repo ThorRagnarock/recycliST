@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Animated, Alert, TextInput, Platform } from 'react-native'
+import { View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Animated, Alert, TextInput, Platform, Dimensions} from 'react-native'
 import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -6,9 +6,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { UserContext2 } from '../Context/ContextProvider';
-import FloatingOptionPicker, {floatingOptionPicker} from '../Components/FloatingOptionPicker'
+import FloatingOptionPicker, { floatingOptionPicker } from '../Components/FloatingOptionPicker'
+import CityAutocomplete from '../Components/CityAutocomplete';
+import ProfileStatistics from '../Components/ProfileStatistics';
+
 
 export default function PersonalProfile() {
+	const screenWidth = Dimensions.get('window').width;
 
 	let mockupSubscribeDate = new Date(2023, 6, 18); //remember january = 0
 
@@ -16,9 +20,11 @@ export default function PersonalProfile() {
 	const [Editing, SetEditing] = useState(false);
 
 	const StartEdit = () => { SetEditing(true); Alert.alert("start editing") }
-	const ConcludeEdit = () => { SetDatePickerSwitch(false);
+	const ConcludeEdit = () => {
+		SetDatePickerSwitch(false);
 		SetOptionPicker(false);
-		SetEditing(false); Alert.alert("done editing") }
+		SetEditing(false); Alert.alert("done editing")
+	}
 
 
 	const [subscribeDate, SetSubscriberDate] = useState(mockupSubscribeDate); //new Date()
@@ -28,7 +34,7 @@ export default function PersonalProfile() {
 	const [residence, SetResidence] = useState({
 		city: "",
 		street: "",
-		streetNum: null,
+		streetNum: "",
 	});
 	const settingPressed = () => {
 		Alert.alert("settings!")
@@ -53,7 +59,7 @@ export default function PersonalProfile() {
 	/////////// birthday date gadget thingie //////
 	// const [date, SetDate] = useState(new Date(null));
 	const [datePickerSwitch, SetDatePickerSwitch] = useState(false);
-	const [optionPicker, SetOptionPicker] =useState(false);
+	const [optionPicker, SetOptionPicker] = useState(false);
 	const dateEventChange = (event, selectedDate) => {
 		const currentDate = selectedDate || birthDate;
 		SetDatePickerSwitch(Platform.OS === 'ios');
@@ -63,8 +69,8 @@ export default function PersonalProfile() {
 	const dateFormatter = birthDate ? `${('0' + (birthDate.getDate())).slice(-2)}/${('0' + (birthDate.getMonth() + 1)).slice(-2)}/${birthDate.getFullYear()}` : "00/00/0000";
 	const minAge = new Date();
 	const maxAge = new Date();
-	minAge.setFullYear(minAge.getFullYear()-8); //that should be minimum AGE
-	maxAge.setFullYear(maxAge.getFullYear()-120);
+	minAge.setFullYear(minAge.getFullYear() - 8); //that should be minimum AGE
+	maxAge.setFullYear(maxAge.getFullYear() - 120);
 
 	const [datePressableOn, SetDatePressableOn] = useState(false);
 
@@ -125,6 +131,8 @@ export default function PersonalProfile() {
 
 					<View style={styles.formFieldsContainer}>
 						<View style={styles.addressDetails}>
+
+
 							<View style={styles.addressDetail}>
 								<TextInput
 									style={[styles.textBoxStyle, { width: 140 }]}
@@ -133,8 +141,13 @@ export default function PersonalProfile() {
 									editable={Editing}
 									onChangeText={text => SetResidence(pervResidence => ({ ...pervResidence, city: text }))}
 								/>
+								{/* <CityAutocomplete
+									style={[styles.textBoxStyle, { width: 300 }]}
+									residence={residence} SetResidence={SetResidence} /> */}
 								<Text style={styles.addressSubtitle}>ישוב</Text>
 							</View>
+
+
 							<View style={styles.addressDetail}>
 								<TextInput
 									style={[styles.textBoxStyle, { width: 140 }]}
@@ -193,12 +206,12 @@ export default function PersonalProfile() {
 								>
 									<Text style={[styles.placeHolderText, { textAlign: 'center' }]}>{status}</Text>
 								</Pressable>
-								<FloatingOptionPicker status={status} SetStatus={SetStatus} optionPicker={optionPicker} SetOptionPicker={SetOptionPicker} style={{zIndex:9999}}/>
-								
+								<FloatingOptionPicker status={status} SetStatus={SetStatus} optionPicker={optionPicker} SetOptionPicker={SetOptionPicker} style={{ zIndex: 9999 }} />
+
 								<Text style={styles.generalSubtitle}>סטטוס אישי</Text>
 
 							</View>
-							<View style={[styles.verticalFormItem, {zIndex:1}]}>
+							<View style={[styles.verticalFormItem, { zIndex: 1 }]}>
 								<TextInput
 									style={[styles.textBoxStyle, { width: 210 }]}
 									value={password}
@@ -209,7 +222,7 @@ export default function PersonalProfile() {
 							</View>
 
 							{/*so the problem is not with the email... maybe the date thing  */}
-							<View style={[styles.verticalFormItem, {zIndex:1}]}>
+							<View style={[styles.verticalFormItem, { zIndex: 1 }]}>
 								<TextInput
 									style={[styles.textBoxStyle, { width: 210 }]}
 									value={email}
@@ -226,10 +239,24 @@ export default function PersonalProfile() {
 
 
 						</View>
+
+						<View>
+						</View>
+					</View>
+					<View>
+						<ProfileStatistics />
+
+						
 					</View>
 				</View>
+				<View style={styles.profileFooterPressable}>
+							<TouchableOpacity  style={[styles.footerTouchable, { width: screenWidth }]} onPress={() => navigation.navigate('ListsMan')}>
+								<Text  style={styles.footerText}>סגור וקדימה, לאפליקציה :)</Text>
+
+							</TouchableOpacity>
+						</View>
 			</LinearGradient>
-			
+
 		</View>
 	)
 }
@@ -296,9 +323,9 @@ const styles = StyleSheet.create({
 		alignItems: 'flex-end',
 		flexDirection: 'column'
 	},
-	nameAndGreeting:{
-		alignItems:'center',
-		marginTop:10,
+	nameAndGreeting: {
+		alignItems: 'center',
+		marginTop: 10,
 	},
 	textBoxStyle: {
 		// zIndex:-1,
@@ -309,29 +336,48 @@ const styles = StyleSheet.create({
 		borderColor: '#ccc',
 		borderWidth: 1,
 	},
-	
-	personalDetails:{
+
+	personalDetails: {
 		// position:'relative',
 		// zIndex:1,
 
 	},
 	floatingOptionPicker: {
-		position:'absolute',
-		zIndex:9999,
-		bottom:300,
-		left:30,
-		backgroundColor:'white',
-		width:'80%',
-		alignSelf:'center',
+		position: 'absolute',
+		zIndex: 9999,
+		bottom: 300,
+		left: 30,
+		backgroundColor: 'white',
+		width: '80%',
+		alignSelf: 'center',
 	},
 	verticalFormItem: {
-		zIndex:2,
+		zIndex: 2,
 		flexDirection: 'row',
 		textAlign: 'right',
 		justifyContent: 'flex-end',
 		justifyContent: 'space-between',
 		marginTop: 30,
 
+	},
+	profileFooterPressable: {
+		flex:1,
+		// width:'100%',
+		position:'absolute',
+		bottom:0,
+		
+
+	},
+	footerTouchable:{
+		backgroundColor: '#6D8FE6',
+		// width:'100%',
+		justifyContent:'center',
+		alignItems:'center',
+		padding: 20,
+	},
+	footerText:{
+		fontFamily:'openSansBold',
+		color: '#fff'
 	},
 })
 // import {Picker} from '@react-native-picker/picker'; //option-select menu
