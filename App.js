@@ -8,9 +8,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ContextProvider from './Src/Context/ContextProvider';
 
-// import * as SplashScreen from 'expo-splash-screen';
-// import { useNavigation } from '@react-navigation/native';
-
 import { StyleSheet, Text, View } from 'react-native';
 
 import Login from './Src/Screens/Login';
@@ -19,7 +16,9 @@ import OnBoarding from './Src/Screens/OnBoarding';
 import SignInScreen from './Src/Screens/SignInScreen';
 import RegNewAccount from './Src/Screens/RegNewAccount';
 import PersonalProfile from './Src/Screens/PersonalProfile';
-// import ListScreen from './Src/Screens/ListScreen';
+import DropDownScreen from './Src/Screens/DropDownScreen';// **
+
+
 import ListsMan from './Src/Screens/ListsMan';
 
 // SplashScreen.preventAutoHideAsync();
@@ -39,15 +38,17 @@ export default function App() {
     <ContextProvider>
       <NavigationContainer>
         <NavStack.Navigator initialRouteName='PersonalProfile' screenOptions={{ headerShown: false }}>
-        {/* PersonalProfile */}
+          {/* PersonalProfile */}
           <NavStack.Screen name='Splash' component={Splash} />
           <NavStack.Screen name='OnBoarding' component={OnBoarding} />
           <NavStack.Screen name='SignInScreen' component={SignInScreen} />
           <NavStack.Screen name='Login' component={Login} />
           <NavStack.Screen name='RegNewAccount' component={RegNewAccount} />
           <NavStack.Screen name='PersonalProfile' component={PersonalProfile} />
-          {/* <NavStack.Screen name='ListScreen' component={ListScreen}/>*/}
-          <NavStack.Screen name='ListsMan' component={ListsMan}/> 
+
+          <NavStack.Screen name='DropDownScreen' component={DropDownScreen}/>
+
+          <NavStack.Screen name='ListsMan' component={ListsMan} />
         </NavStack.Navigator>
 
       </NavigationContainer>

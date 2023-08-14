@@ -50,7 +50,7 @@ export default function ListsMan() {
 										<TextInput
 											style={[styles.listsSearchBar, {}]}
 											value={searchValue}
-											onChangeText={() => { FetchSearchResutlts(searchValue) }}
+											onChangeText={(searchValue) => { FetchSearchResutlts(searchValue) }}
 											placeholder='חפש רשימות'
 										/>
 										<Image source={require('../../assets/icons/magnifingGlassSearch.png')} style={styles.inlineImage} />
@@ -63,7 +63,7 @@ export default function ListsMan() {
 										<TextInput
 											style={[styles.addListBar, {}]}
 											value={addListName}
-											onChangeText={() => { FetchSearchResutlts(addListName) }}
+											onChangeText={(addListName) => { FetchSearchResutlts(addListName) }}
 											placeholder='חפש רשימות'
 										/>
 										<Image source={require('../../assets/icons/addListDocument.png')} style={styles.inlineImage} />
@@ -104,5 +104,6 @@ const styles = StyleSheet.create({
 	LogoImage: {
 		width: 60,
 	},
+	listsSearchBar: {},
 
 })

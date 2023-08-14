@@ -1,13 +1,13 @@
-import { View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Animated, Alert, TextInput, Platform, Dimensions} from 'react-native'
+import { View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Animated, Alert, TextInput, Platform, Dimensions,} from 'react-native'//////
 import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { UserContext2 } from '../Context/ContextProvider';
 import FloatingOptionPicker, { floatingOptionPicker } from '../Components/FloatingOptionPicker'
-import CityAutocomplete from '../Components/CityAutocomplete';
 import ProfileStatistics from '../Components/ProfileStatistics';
 
 
@@ -114,7 +114,8 @@ export default function PersonalProfile() {
 							<Image source={require('../../assets/icons/recycliSTLogo113.png')} style={styles.LogoImage} resizeMode='contain' />
 						</TouchableOpacity>
 					</View>
-
+					
+					
 					<View style={styles.profilePictureView}>
 						<Pressable style={styles.changeProfilePicBtn} onPress={alertMsgForCheck}>
 							<Image source={require('../../assets/icons/EditProfileImageIcon.png')} />
@@ -130,24 +131,27 @@ export default function PersonalProfile() {
 					</View>
 
 					<View style={styles.formFieldsContainer}>
-						<View style={styles.addressDetails}>
+						<View style={[styles.addressDetails, {}]}>
+						
 
-
-							<View style={styles.addressDetail}>
-								<TextInput
+						<View style={styles.addressDetail}>
+								{/* <TextInput
 									style={[styles.textBoxStyle, { width: 140 }]}
 									placeholder='###'
-									value={residence.city}
+									value={residence.street}
 									editable={Editing}
-									onChangeText={text => SetResidence(pervResidence => ({ ...pervResidence, city: text }))}
-								/>
-								{/* <CityAutocomplete
-									style={[styles.textBoxStyle, { width: 300 }]}
-									residence={residence} SetResidence={SetResidence} /> */}
+									onChangeText={text => SetResidence(pervResidence => ({ ...pervResidence, street: text }))}
+								/> */}
+								
+								
+								<Pressable style={[styles.textBoxStyle, { width: 140 }]} onPress={()=> navigation.navigate('DropDownScreen')}><Text>Something</Text></Pressable>
+
+
 								<Text style={styles.addressSubtitle}>ישוב</Text>
 							</View>
 
-
+							
+							
 							<View style={styles.addressDetail}>
 								<TextInput
 									style={[styles.textBoxStyle, { width: 140 }]}
@@ -169,6 +173,7 @@ export default function PersonalProfile() {
 								/>
 								<Text style={styles.addressSubtitle}>מס׳</Text>
 							</View>
+						
 						</View>
 						{/** So far address View */}
 
@@ -264,7 +269,11 @@ const styles = StyleSheet.create({
 	backgroundGradient: {
 		flex: 1,
 	},
-	container: {},
+	container: {
+		flex: 1,
+
+		// zIndex:1,
+	},
 	linearGradient: {
 		flex: 1,
 		width: '100%',
@@ -288,7 +297,9 @@ const styles = StyleSheet.create({
 		width: 30,
 		top: 32,
 		left: 32,
-		// elevation: 5, //for android
+		backgroundColor: 'rgba(255, 255, 255, 0.01)', // Transparent background
+
+		elevation: 5, //for android
 		shadowColor: '#000',
 		shadowOffset: { width: -3, height: 3 },//bottom left below this
 		shadowOpacity: 0.55,
@@ -381,3 +392,12 @@ const styles = StyleSheet.create({
 	},
 })
 // import {Picker} from '@react-native-picker/picker'; //option-select menu
+
+
+{/* <TextInput
+									style={[styles.textBoxStyle, { width: 140 }]}
+									placeholder='###'
+									value={residence.city}
+									editable={Editing}
+									onChangeText={text => SetResidence(pervResidence => ({ ...pervResidence, city: text }))}
+								/> */}
