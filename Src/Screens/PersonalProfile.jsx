@@ -135,18 +135,11 @@ export default function PersonalProfile() {
 						
 
 						<View style={styles.addressDetail}>
-								{/* <TextInput
-									style={[styles.textBoxStyle, { width: 140 }]}
-									placeholder='###'
-									value={residence.street}
-									editable={Editing}
-									onChangeText={text => SetResidence(pervResidence => ({ ...pervResidence, street: text }))}
-								/> */}
-								
-								
-								<Pressable style={[styles.textBoxStyle, { width: 140 }]} onPress={()=> navigation.navigate('DropDownScreen')}><Text>Something</Text></Pressable>
-
-
+							<Pressable 
+								style={[styles.textBoxStyle, { width: 140,  }]} 
+								onPress={()=> navigation.navigate('DropDownScreen', {SetResidence})}>
+									<Text style={{textAlign:'right'}}>{residence.city ? `${residence.city}` : '2 אותיות ראשונות'}</Text>
+									</Pressable>
 								<Text style={styles.addressSubtitle}>ישוב</Text>
 							</View>
 
@@ -391,13 +384,3 @@ const styles = StyleSheet.create({
 		color: '#fff'
 	},
 })
-// import {Picker} from '@react-native-picker/picker'; //option-select menu
-
-
-{/* <TextInput
-									style={[styles.textBoxStyle, { width: 140 }]}
-									placeholder='###'
-									value={residence.city}
-									editable={Editing}
-									onChangeText={text => SetResidence(pervResidence => ({ ...pervResidence, city: text }))}
-								/> */}
