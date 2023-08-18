@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Animated, Alert, TextInput, Platform, Dimensions,} from 'react-native'//////
-import React, { useState, useContext } from 'react';
+import { View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Animated, Alert, TextInput, Platform, Dimensions, } from 'react-native'//////
+import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -33,6 +34,7 @@ export default function PersonalProfile() {
 
 	const [residence, SetResidence] = useState({
 		city: "",
+		cityCode: 0,
 		street: "",
 		streetNum: "",
 	});
@@ -91,6 +93,36 @@ export default function PersonalProfile() {
 		}, 3000);
 	}
 	const alertMsgForCheck = () => { Alert.alert('your interaction seems to be working ok') }
+
+	// const LoadCities = async () => {
+	// 	let response = await fetch('https://data.gov.il/api/3/action/datastore_search?resource_id=8f714b6f-c35c-4b40-a0e7-547b675eee0e&limit=2000&fields=_id,city_code,city_name_he');
+	// 	let data = await response.json();
+
+	// 	const suggestions = data.result.records
+	// 		.map(item => ({
+	// 			id: item.city_code,					//uses the city code as an id
+	// 			title: item.city_name_he,			//2b retrieved later
+	// 		}));
+	// 	//console.log("dropDown Suggestions:", suggestions);
+	// 	//SetResidence((prev)=> {return {...prev, city:suggestions[1].title}})
+	// }
+
+	// const LoadStreets = async (cityCode) => {
+	// 	let url = `https://data.gov.il/api/3/action/datastore_search?resource_id=bf185c7f-1a4e-4662-88c5-fa118a244bda&limit=150000&filters={"city_code":${cityCode}}&fields=_id, street_name`
+
+	// 	console.log('url', url)
+
+	// 	const response = await fetch(url);
+	// 	const data = await response.json();
+
+	// 	console.log('streets', data.result.records);
+	// }
+
+	// useFocusEffect(useCallback(() => {
+	// 	//LoadCities();
+	// 	LoadStreets(8400);
+	// }, []))
+
 	return (
 		<View style={styles.backgroundGradient}>
 			<LinearGradient
@@ -114,8 +146,8 @@ export default function PersonalProfile() {
 							<Image source={require('../../assets/icons/recycliSTLogo113.png')} style={styles.LogoImage} resizeMode='contain' />
 						</TouchableOpacity>
 					</View>
-					
-					
+
+
 					<View style={styles.profilePictureView}>
 						<Pressable style={styles.changeProfilePicBtn} onPress={alertMsgForCheck}>
 							<Image source={require('../../assets/icons/EditProfileImageIcon.png')} />
@@ -132,29 +164,31 @@ export default function PersonalProfile() {
 
 					<View style={styles.formFieldsContainer}>
 						<View style={[styles.addressDetails, {}]}>
-						
 
-						<View style={styles.addressDetail}>
-							<Pressable 
-								style={[styles.textBoxStyle, { width: 140,  }]} 
-								onPress={()=> navigation.navigate('DropDownScreen', {SetResidence})}>
-									<Text style={{textAlign:'right'}}>{residence.city ? `${residence.city}` : '2 אותיות ראשונות'}</Text>
-									</Pressable>
+
+							<View style={styles.addressDetail}>
+								<Pressable
+									style={[styles.textBoxStyle, { width: 140, }]}
+									onPress={() => navigation.navigate('DropDownScreen', { SetResidence })}>
+									<Text style={{ textAlign: 'right' }}>{residence.city ? `${residence.city}` : 'ישוב'}</Text>
+								</Pressable>
 								<Text style={styles.addressSubtitle}>ישוב</Text>
 							</View>
 
-							
-							
+
+
 							<View style={styles.addressDetail}>
-								<TextInput
-									style={[styles.textBoxStyle, { width: 140 }]}
-									placeholder='###'
-									value={residence.street}
-									editable={Editing}
-									onChangeText={text => SetResidence(pervResidence => ({ ...pervResidence, street: text }))}
-								/>
+
+
+								<Pressable
+									style={[styles.textBoxStyle, { width: 140, }]}
+									onPress={() => navigation.navigate('DropDownSearchStreet', { SetResidence })}>
+									<Text style={{ textAlign: 'right' }}>{residence.street ? `${residence.street}` : 'רחוב'}</Text>
+								</Pressable>
+
 								<Text style={styles.addressSubtitle}>רחוב</Text>
 							</View>
+
 							<View style={styles.addressDetail}>
 								<TextInput
 									style={[styles.textBoxStyle, { width: 30 }]}
@@ -166,7 +200,7 @@ export default function PersonalProfile() {
 								/>
 								<Text style={styles.addressSubtitle}>מס׳</Text>
 							</View>
-						
+
 						</View>
 						{/** So far address View */}
 
@@ -244,15 +278,15 @@ export default function PersonalProfile() {
 					<View>
 						<ProfileStatistics />
 
-						
+
 					</View>
 				</View>
 				<View style={styles.profileFooterPressable}>
-							<TouchableOpacity  style={[styles.footerTouchable, { width: screenWidth }]} onPress={() => navigation.navigate('ListsMan')}>
-								<Text  style={styles.footerText}>סגור וקדימה, לאפליקציה :)</Text>
+					<TouchableOpacity style={[styles.footerTouchable, { width: screenWidth }]} onPress={() => navigation.navigate('ListsMan')}>
+						<Text style={styles.footerText}>סגור וקדימה, לאפליקציה :)</Text>
 
-							</TouchableOpacity>
-						</View>
+					</TouchableOpacity>
+				</View>
 			</LinearGradient>
 
 		</View>
@@ -365,22 +399,22 @@ const styles = StyleSheet.create({
 
 	},
 	profileFooterPressable: {
-		flex:1,
+		flex: 1,
 		// width:'100%',
-		position:'absolute',
-		bottom:0,
-		
+		position: 'absolute',
+		bottom: 0,
+
 
 	},
-	footerTouchable:{
+	footerTouchable: {
 		backgroundColor: '#6D8FE6',
 		// width:'100%',
-		justifyContent:'center',
-		alignItems:'center',
+		justifyContent: 'center',
+		alignItems: 'center',
 		padding: 20,
 	},
-	footerText:{
-		fontFamily:'openSansBold',
+	footerText: {
+		fontFamily: 'openSansBold',
 		color: '#fff'
 	},
 })

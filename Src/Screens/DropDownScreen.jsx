@@ -46,7 +46,7 @@ export default function DropDownScreen({route, navigation}) {
 		SetShowList(true);
 
 	}, []); ////////////////////////////////	//that's all folks
-	const onSelectItem = useCallback((item) => {
+	const onSelectItem = useCallback(async (item) => {
 		SetInput(item.title); 	//.marks selection in inputbox
 		SetResidence((prevResidence) => ({
 			...prevResidence,
@@ -60,11 +60,11 @@ export default function DropDownScreen({route, navigation}) {
 	}, [])
 
 	return (
-		<TouchableWithoutFeedback ofPress={() => { Keyboard.dismiss }}>
+		<TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
 			<SafeAreaView style={{ flex: 1 }}>
 				<Text style={styles.searchBoxTitle}>הזן כאן פרטים רלוונטים</Text>
 				<TextInput
-					placeholder='עיר/רחוב'
+					placeholder='עיר'
 					onChangeText={onChangeText}
 					value={input}
 					style={styles.textInputSearchBox}
@@ -72,7 +72,7 @@ export default function DropDownScreen({route, navigation}) {
 				/>
 				{
 					!showList && selectedItem &&
-					<Text style={styles.cityCodeText}>City Code: {selectedItem.code}</Text>
+					<Text style={styles.itemCodeText}>City Code: {selectedItem.code}</Text>
 				}
 				<Pressable onPress={() => navigation.goBack()}>
 					<View style={styles.nextBtn}>
@@ -122,8 +122,6 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderRadius: 2,
 		textAlign: 'right',
-
-
 	},
 	nextBtn: {
 		borderColor: '#074EE8',
@@ -134,8 +132,7 @@ const styles = StyleSheet.create({
 		height: 40,
 		alignItems: 'center',
 		justifyContent:'center',
-		marginTop:30
-		
+		marginTop:30,
 	},
 	flatListItem: {
 		color: '#383b42',

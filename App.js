@@ -17,6 +17,8 @@ import SignInScreen from './Src/Screens/SignInScreen';
 import RegNewAccount from './Src/Screens/RegNewAccount';
 import PersonalProfile from './Src/Screens/PersonalProfile';
 import DropDownScreen from './Src/Screens/DropDownScreen';// **
+import DropDownSearchStreet from './Src/Screens/DropDownSearchStreet';
+// import DropDownMachine  from './Src/Screens/DropDownMachine';
 
 
 import ListsMan from './Src/Screens/ListsMan';
@@ -47,6 +49,8 @@ export default function App() {
           <NavStack.Screen name='PersonalProfile' component={PersonalProfile} />
 
           <NavStack.Screen name='DropDownScreen' component={DropDownScreen}/>
+          <NavStack.Screen name='DropDownSearchStreet' component={DropDownSearchStreet}/>
+          {/* <NavStack.Screen name='DropDownMachine' component={DropDownMachine}/> */}
 
           <NavStack.Screen name='ListsMan' component={ListsMan} />
         </NavStack.Navigator>
