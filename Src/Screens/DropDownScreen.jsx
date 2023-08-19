@@ -9,11 +9,14 @@ import {
 	FlatList, 
 	Pressable 
 } from 'react-native';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
+import { UserContext2 } from '../Context/ContextProvider'
 
 
 export default function DropDownScreen({route, navigation}) {
-	const {SetResidence} = route.params;
+	const { residence, SetResidence } = useContext(UserContext2);
+
+	// const {SetResidence} = route.params;
 	// const { log, Console } = require('console');
 
 	const [input, SetInput] = useState("");

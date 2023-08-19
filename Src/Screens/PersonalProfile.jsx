@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Animated, Alert, TextInput, Platform, Dimensions, } from 'react-native'//////
-import React, { useState, useContext, useCallback, useEffect } from 'react';
+import React, { useState, useContext, } from 'react'; // useCallback, useEffect
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useFocusEffect } from '@react-navigation/native';
+// import { useFocusEffect } from '@react-navigation/native';
 
 
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -30,14 +30,14 @@ export default function PersonalProfile() {
 
 	const [subscribeDate, SetSubscriberDate] = useState(mockupSubscribeDate); //new Date()
 	//skipping the option to edit recyclePreferences
-	const { email, SetEmail, name, SetName, password, SetPassword, recycPrefs, SetRecycPrefs } = useContext(UserContext2);
+	const { email, SetEmail, name, SetName, password, SetPassword, recycPrefs, SetRecycPrefs, residence, SetResidence } = useContext(UserContext2);
 
-	const [residence, SetResidence] = useState({
-		city: "",
-		cityCode: 0,
-		street: "",
-		streetNum: "",
-	});
+	// const [residence, SetResidence] = useState({
+	// 	city: "",
+	// 	cityCode: 0,
+	// 	street: "",
+	// 	streetNum: "",
+	// });
 	const settingPressed = () => {
 		Alert.alert("settings!")
 	}
@@ -47,10 +47,11 @@ export default function PersonalProfile() {
 		email: email,
 		password: password,
 		name: name,
+		recycPrefs: recycPrefs,
 
 		residence: residence,
 		status: status,
-		birthdate: birthDate,
+		birthDate: birthDate,
 		subscribeDate: subscribeDate,
 	})
 
@@ -74,7 +75,7 @@ export default function PersonalProfile() {
 	minAge.setFullYear(minAge.getFullYear() - 8); //that should be minimum AGE
 	maxAge.setFullYear(maxAge.getFullYear() - 120);
 
-	const [datePressableOn, SetDatePressableOn] = useState(false);
+	const [datePressableOn, SetDatePressableOn] = useState(false); //######
 
 
 	const handleLongPress = () => {
@@ -93,35 +94,6 @@ export default function PersonalProfile() {
 		}, 3000);
 	}
 	const alertMsgForCheck = () => { Alert.alert('your interaction seems to be working ok') }
-
-	// const LoadCities = async () => {
-	// 	let response = await fetch('https://data.gov.il/api/3/action/datastore_search?resource_id=8f714b6f-c35c-4b40-a0e7-547b675eee0e&limit=2000&fields=_id,city_code,city_name_he');
-	// 	let data = await response.json();
-
-	// 	const suggestions = data.result.records
-	// 		.map(item => ({
-	// 			id: item.city_code,					//uses the city code as an id
-	// 			title: item.city_name_he,			//2b retrieved later
-	// 		}));
-	// 	//console.log("dropDown Suggestions:", suggestions);
-	// 	//SetResidence((prev)=> {return {...prev, city:suggestions[1].title}})
-	// }
-
-	// const LoadStreets = async (cityCode) => {
-	// 	let url = `https://data.gov.il/api/3/action/datastore_search?resource_id=bf185c7f-1a4e-4662-88c5-fa118a244bda&limit=150000&filters={"city_code":${cityCode}}&fields=_id, street_name`
-
-	// 	console.log('url', url)
-
-	// 	const response = await fetch(url);
-	// 	const data = await response.json();
-
-	// 	console.log('streets', data.result.records);
-	// }
-
-	// useFocusEffect(useCallback(() => {
-	// 	//LoadCities();
-	// 	LoadStreets(8400);
-	// }, []))
 
 	return (
 		<View style={styles.backgroundGradient}>
@@ -163,9 +135,8 @@ export default function PersonalProfile() {
 					</View>
 
 					<View style={styles.formFieldsContainer}>
+
 						<View style={[styles.addressDetails, {}]}>
-
-
 							<View style={styles.addressDetail}>
 								<Pressable
 									style={[styles.textBoxStyle, { width: 140, }]}
@@ -174,25 +145,19 @@ export default function PersonalProfile() {
 								</Pressable>
 								<Text style={styles.addressSubtitle}>ישוב</Text>
 							</View>
-
-
-
 							<View style={styles.addressDetail}>
-
-
 								<Pressable
 									style={[styles.textBoxStyle, { width: 140, }]}
 									onPress={() => navigation.navigate('DropDownSearchStreet', { SetResidence })}>
 									<Text style={{ textAlign: 'right' }}>{residence.street ? `${residence.street}` : 'רחוב'}</Text>
 								</Pressable>
-
 								<Text style={styles.addressSubtitle}>רחוב</Text>
 							</View>
-
 							<View style={styles.addressDetail}>
 								<TextInput
+									key={residence.streetNum}
 									style={[styles.textBoxStyle, { width: 30 }]}
-									placeholder='00'
+									placeholder={residence.streetNum ? residence.streetNum.toString() : '00'}
 									value={residence.streetNum ? residence.streetNum.toString() : ''}
 									editable={Editing}
 									keyboardType='numeric'
@@ -203,9 +168,7 @@ export default function PersonalProfile() {
 
 						</View>
 						{/** So far address View */}
-
 						<View style={styles.personalDetails}>
-
 							<View style={[styles.verticalFormItem, styles.dateItem]}>
 								<Pressable
 									style={[styles.textBoxStyle, { width: 210, height: 20 }]}
@@ -227,8 +190,6 @@ export default function PersonalProfile() {
 								</Pressable>
 								<Text style={styles.generalSubtitle}>תאריך לידה</Text>
 							</View>
-
-
 							<View style={[styles.verticalFormItem, styles.null]}>
 								<Pressable
 									style={[styles.textBoxStyle, { width: 210 }]}
@@ -241,7 +202,6 @@ export default function PersonalProfile() {
 								<FloatingOptionPicker status={status} SetStatus={SetStatus} optionPicker={optionPicker} SetOptionPicker={SetOptionPicker} style={{ zIndex: 9999 }} />
 
 								<Text style={styles.generalSubtitle}>סטטוס אישי</Text>
-
 							</View>
 							<View style={[styles.verticalFormItem, { zIndex: 1 }]}>
 								<TextInput
@@ -263,32 +223,18 @@ export default function PersonalProfile() {
 								/>
 								<Text style={styles.generalSubtitle}>אימייל</Text>
 							</View>
-							{/* 
-							TODO: Date Select(done)
-							Option Select
-							*/}
-
-
-
-						</View>
-
-						<View>
 						</View>
 					</View>
 					<View>
 						<ProfileStatistics />
-
-
 					</View>
 				</View>
 				<View style={styles.profileFooterPressable}>
 					<TouchableOpacity style={[styles.footerTouchable, { width: screenWidth }]} onPress={() => navigation.navigate('ListsMan')}>
 						<Text style={styles.footerText}>סגור וקדימה, לאפליקציה :)</Text>
-
 					</TouchableOpacity>
 				</View>
 			</LinearGradient>
-
 		</View>
 	)
 }

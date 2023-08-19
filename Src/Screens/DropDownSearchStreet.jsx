@@ -9,11 +9,15 @@ import {
 	Pressable, 
 	Keyboard,
 } from 'react-native'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useContext} from 'react'
+import { UserContext2 } from '../Context/ContextProvider'
 
 
 export default function DropDownSearchStreet({route, navigation}) {
-	const {SetResidence} = route.params;
+	const { residence, SetResidence } = useContext(UserContext2);
+
+	// const {SetResidence} = route.params;
+	const [streetNumber, SetStreetNumber] = useState(0);
 	const [input, SetInput] = useState("");
 	const [data, SetData] = useState(null); // = ="suggestionsList"
 	const [loading, SetLoading] = useState(false);
@@ -36,7 +40,7 @@ export default function DropDownSearchStreet({route, navigation}) {
 				.filter(item => item.street_name.includes(text))
 				.map(item => ({
 					id: item._id,
-					title: item.street_name,
+					title: item.street_name.trim(),
 				}));
 			console.log("dropDown Suggestions:", suggestions);
 			SetData(suggestions);
@@ -56,12 +60,19 @@ export default function DropDownSearchStreet({route, navigation}) {
 
 		SetSelectedItem({ title: item.title, code: item.id });
 		SetShowList(false);
-	})
+	}, []);
+
+	const updateStreetNumber = (text)=> {
+		SetStreetNumber(text);
+		SetResidence((prevResidence)=>({
+			...prevResidence,
+			streetNum: text,
+		}));
+	}
 	return (
 		<TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
-
 			<SafeAreaView style={styles.safeAreaView}>
-				<Text style={styles.searchBoxTitle}>הזן כאן פרטים רלוונטים</Text>
+				<Text style={styles.searchBoxTitle}>הזן רחוב ומספר</Text>
 				<TextInput
 					placeholder='רחוב'
 					onChangeText={onChangeText}
@@ -72,6 +83,15 @@ export default function DropDownSearchStreet({route, navigation}) {
 					!showList && selectedItem &&
 					<Text style={styles.itemCodeText}>street id: {selectedItem.code}</Text>
 				}
+
+				<TextInput
+					placeholder='מספר'
+					onChangeText={updateStreetNumber}
+					value={String(streetNumber)}
+					style={[styles.textInputSearchBox, {width: 70}]}
+				/>
+
+
 				<Pressable onPress={() => navigation.goBack()}>
 					<View style={styles.nextBtn}>
 						<Text>סיים וחזור</Text>
@@ -102,13 +122,14 @@ export default function DropDownSearchStreet({route, navigation}) {
 						/>
 					</View>
 				}
+				
 			</SafeAreaView >
 		</TouchableWithoutFeedback>
 	)
 }
 styles = StyleSheet.create({
-	safeAreaView:{
-		 flex:1,
+	safeAreaView: {
+		flex: 1,
 	},
 	searchBoxTitle: {
 		marginLeft: 12,
@@ -133,8 +154,8 @@ styles = StyleSheet.create({
 		width: 120,
 		height: 40,
 		alignItems: 'center',
-		justifyContent:'center',
-		marginTop:30,
+		justifyContent: 'center',
+		marginTop: 30,
 	},
 	flatListItem: {
 		color: '#383b42',
