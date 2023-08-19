@@ -13,7 +13,7 @@ import React, { useState, useCallback, useContext } from 'react';
 import { UserContext2 } from '../Context/ContextProvider'
 
 
-export default function DropDownScreen({route, navigation}) {
+export default function DropDownScreen({ navigation}) {
 	const { residence, SetResidence } = useContext(UserContext2);
 
 	// const {SetResidence} = route.params;
@@ -53,7 +53,9 @@ export default function DropDownScreen({route, navigation}) {
 		SetInput(item.title); 	//.marks selection in inputbox
 		SetResidence((prevResidence) => ({
 			...prevResidence,
-			city: item.title
+			city: item.title,
+			city_code: item.id,
+
 		}));
 		SetSelectedItem({ title: item.title, code: item.id });	//.makes that selection actuall
 		SetShowList(false);		//.close the dropdownlist

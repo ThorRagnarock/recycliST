@@ -13,7 +13,7 @@ import React, { useCallback, useState, useContext} from 'react'
 import { UserContext2 } from '../Context/ContextProvider'
 
 
-export default function DropDownSearchStreet({route, navigation}) {
+export default function DropDownSearchStreet({navigation}) {
 	const { residence, SetResidence } = useContext(UserContext2);
 
 	// const {SetResidence} = route.params;
@@ -32,7 +32,7 @@ export default function DropDownSearchStreet({route, navigation}) {
 		}
 		SetLoading(true);
 		try {
-			let cityCode = '8400';
+			let cityCode = residence.city_code;
 			const response = await fetch(`https://data.gov.il/api/3/action/datastore_search?resource_id=bf185c7f-1a4e-4662-88c5-fa118a244bda&limit=150000&filters={"city_code":${cityCode}}&fields=_id,street_name`);
 			const items = await response.json();
 			// console.log(items);
@@ -83,7 +83,6 @@ export default function DropDownSearchStreet({route, navigation}) {
 					!showList && selectedItem &&
 					<Text style={styles.itemCodeText}>street id: {selectedItem.code}</Text>
 				}
-
 				<TextInput
 					placeholder='מספר'
 					onChangeText={updateStreetNumber}
