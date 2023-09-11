@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, TextInput, Alert } from 'react-native'
+import { View, Text, StyleSheet, Pressable, TextInput } from 'react-native'
 import React, { useState, useContext } from 'react';
 import { UserContext2 } from '../Context/ContextProvider';
 
@@ -13,7 +13,7 @@ export default function RegPassword({ nextStep }) {
 		const pwRegEx =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*_+]).{7,12}$/
 
 		if (!pwRegEx.test(password)) {
-			Alert.alert(password);
+			// Alert.alert(password);
 			SetWrningSwitch(true);
 		}
 		else { nextStep(password); }

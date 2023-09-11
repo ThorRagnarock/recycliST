@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, Alert } from 'react-native'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React, { useState, useContext } from 'react';
 import { UserContext2 } from '../Context/ContextProvider';
 

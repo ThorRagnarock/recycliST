@@ -15,28 +15,20 @@ import { UserContext2 } from '../Context/ContextProvider'
 
 export default function DropDownScreen({ navigation}) {
 	const { residence, SetResidence } = useContext(UserContext2);
-
-	// const {SetResidence} = route.params;
-	// const { log, Console } = require('console');
-
 	const [input, SetInput] = useState("");
 	const [suggestionsList, SetSuggestionsList] = useState(null);	// = = "data"
-	const [loading, SetLoading] = useState(false);
 	const [selectedItem, SetSelectedItem] = useState(null);
 	const [showList, SetShowList]=useState(false)
 
 	const onChangeText = useCallback(async (text) => {
 		SetInput(text);
 		console.log("oct Suggestions: ", text);// q ==> text
-		if (typeof text !== 'string' || text.length < 2) { //clears data if inputBox empty
+		if (typeof text !== 'string' || text.length < 2) { 	//clears data if inputBox empty
 			SetSuggestionsList(null); return;
 		}
-		SetLoading(true);
-
 		const response = await fetch('https://data.gov.il/api/3/action/datastore_search?resource_id=8f714b6f-c35c-4b40-a0e7-547b675eee0e&limit=2000&fields=_id,city_code,city_name_he');
 
 		const items = await response.json();
-
 		const suggestions = items.result.records
 			.filter(item => item.city_name_he.includes(text))
 			.map(item => ({
@@ -44,26 +36,22 @@ export default function DropDownScreen({ navigation}) {
 				title: item.city_name_he,			//2b retrieved later
 			}));
 		console.log("dropDown Suggestions:", suggestions);
-		SetSuggestionsList(suggestions);
-		SetLoading(false);
-		SetShowList(true);
-
-	}, []); ////////////////////////////////	//that's all folks
+		SetSuggestionsList(suggestions);			//puts the items in the list
+		SetShowList(true);							//show/hides the list
+	}, []); ////////////////////////////////		//that's all folks
 	const onSelectItem = useCallback(async (item) => {
-		SetInput(item.title); 	//.marks selection in inputbox
-		SetResidence((prevResidence) => ({
+		SetInput(item.title); 						//.marks selection in inputbox
+		SetResidence((prevResidence) => ({			//speaks for itself...
 			...prevResidence,
 			city: item.title,
 			city_code: item.id,
-
 		}));
-		SetSelectedItem({ title: item.title, code: item.id });	//.makes that selection actuall
+		SetSelectedItem({ title: item.title, code: item.id });	//.makes that selection actual
 		SetShowList(false);		//.close the dropdownlist
 	}, [])
 	const OnClearPress = useCallback(() => {
 		SetSuggestionsList(null);
 	}, [])
-
 	return (
 		<TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
 			<SafeAreaView style={{ flex: 1 }}>
@@ -73,7 +61,6 @@ export default function DropDownScreen({ navigation}) {
 					onChangeText={onChangeText}
 					value={input}
 					style={styles.textInputSearchBox}
-
 				/>
 				{
 					!showList && selectedItem &&

@@ -5,14 +5,12 @@ import { useNavigation } from '@react-navigation/native';
 export default function SignInScreen() {
 	const navigation = useNavigation();
 	const StamKishkoosh = () => {
-		alert("Ahalan Vesahalan");
+		alert("TODO: 3rd party");
 	}
 	const Registration = () => {
-		// alert("הולך למסך הרשמה");
 		navigation.navigate('RegNewAccount');
 	}
 	const Logintration = () => {
-		// Alert.alert("Logging In");
 		navigation.navigate('Login');
 	}
 

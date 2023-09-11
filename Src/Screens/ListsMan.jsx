@@ -15,10 +15,13 @@ export default function ListsMan() {
 
 	const navigation = useNavigation();
 
-	const FetchSearchResutlts = (searchValue) => { Alert.alert('fetching resluts of ', searchValue) }
+	const FetchSearchResutlts = (searchValue) => { Alert.alert('TODO:fetch resluts of ', searchValue) }
+	const OpenHamburgerMenu = () => { Alert.alert('TODO: hamburger menu ') }
+	const PinLatestList = (event) => { Alert.alert('TODO: pin list '), event }
 
-	const alertMsgForCheck = () => { Alert.alert('your interaction seems to be working ok') }
+	
 
+	const alertMsgForCheck = () => { Alert.alert('TODO: back button') }
 
 	return (
 		<View style={styles.backgroundGradient}>
@@ -30,15 +33,28 @@ export default function ListsMan() {
 				style={styles.linearGradient}
 			>
 				<View style={styles.container}>
-
-
-					<View style={styles.title}>
+					{/* <View style={styles.title}>
 
 						<TouchableOpacity onLongPress={() => alertMsgForCheck()}>
 							<Image source={require('../../assets/icons/recycliSTLogo113.png')} style={styles.LogoImage} resizeMode='contain' />
 						</TouchableOpacity>
 
 						<Text>List Manager</Text>
+					</View> */}
+
+					<View style={styles.title}>
+						{/* TODO: Open hamburger menu */}
+						<View style={ flexDirection='column'  }>
+							<TouchableOpacity onPress={() => OpenHamburgerMenu()}>
+								<Image source={require('../../assets/icons/hambungerIcon.png')} resizeMode='contain' />
+							</TouchableOpacity>
+							<TouchableOpacity onPress={() => PinLatestList()}>
+								<Image source={require('../../assets/icons/pinned.png')} resizeMode='contain' />
+							</TouchableOpacity>
+						</View>
+
+						<Image source={require('../../assets/icons/recycliSTLogo113.png')} style={styles.LogoImage} resizeMode='contain' />
+
 					</View>
 					<View style={styles.searchAndAddBar}>
 
@@ -94,13 +110,15 @@ const styles = StyleSheet.create({
 	},
 	container: {},
 	title: {
-		lexDirection: 'row-reverse',
+		flexDirection: 'row-reverse',
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		width: 330,
 
 		top: '9%',
 	},
+
+	
 	LogoImage: {
 		width: 60,
 	},

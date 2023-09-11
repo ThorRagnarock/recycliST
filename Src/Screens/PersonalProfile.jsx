@@ -1,9 +1,27 @@
-import { View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Animated, Alert, TextInput, Platform, Dimensions, } from 'react-native'//////
+//TODO's:
+/*
+
+תיעוד זמן הצטרפות accountCreated
+אפשרויות לשחזור סיסמה
+
+*/
+import { 
+	View, 
+	Text, 
+	StyleSheet, 
+	Image, 
+	Pressable, 
+	TouchableOpacity, 
+	Animated, 
+	Alert, 
+	TextInput, 
+	Platform, 
+	Dimensions, 
+	ScrollView 
+} from 'react-native'//////
 import React, { useState, useContext, } from 'react'; // useCallback, useEffect
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-// import { useFocusEffect } from '@react-navigation/native';
-
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -20,26 +38,19 @@ export default function PersonalProfile() {
 	const navigation = useNavigation();
 	const [Editing, SetEditing] = useState(false);
 
-	const StartEdit = () => { SetEditing(true); Alert.alert("start editing") }
+	const StartEdit = () => { SetEditing(true); Alert.alert("מצב עריכה") }
 	const ConcludeEdit = () => {
 		SetDatePickerSwitch(false);
 		SetOptionPicker(false);
-		SetEditing(false); Alert.alert("done editing")
+		SetEditing(false); Alert.alert("עריכה הסתיימה")
 	}
-
-
-	const [subscribeDate, SetSubscriberDate] = useState(mockupSubscribeDate); //new Date()
+	/*#  TODO!!!  #*/const [subscribeDate, SetSubscriberDate] = useState(mockupSubscribeDate); //new Date() - TODO!!!!
+	
 	//skipping the option to edit recyclePreferences
 	const { email, SetEmail, name, SetName, password, SetPassword, recycPrefs, SetRecycPrefs, residence, SetResidence } = useContext(UserContext2);
 
-	// const [residence, SetResidence] = useState({
-	// 	city: "",
-	// 	cityCode: 0,
-	// 	street: "",
-	// 	streetNum: "",
-	// });
 	const settingPressed = () => {
-		Alert.alert("settings!")
+		Alert.alert("למצב עריכה")
 	}
 	const [status, SetStatus] = useState('מצבך המשפחתי');// that's what's up
 	const [birthDate, SetBirthDate] = useState(null);
@@ -60,7 +71,6 @@ export default function PersonalProfile() {
 	const [animatedFadeout] = useState(new Animated.Value(1));
 
 	/////////// birthday date gadget thingie //////
-	// const [date, SetDate] = useState(new Date(null));
 	const [datePickerSwitch, SetDatePickerSwitch] = useState(false);
 	const [optionPicker, SetOptionPicker] = useState(false);
 	const dateEventChange = (event, selectedDate) => {
@@ -77,7 +87,6 @@ export default function PersonalProfile() {
 
 	const [datePressableOn, SetDatePressableOn] = useState(false); //######
 
-
 	const handleLongPress = () => {
 		SetTextVisible(true);
 		animatedFadeout.setValue(1);
@@ -93,7 +102,7 @@ export default function PersonalProfile() {
 			).start(() => SetTextVisible(false))
 		}, 3000);
 	}
-	const alertMsgForCheck = () => { Alert.alert('your interaction seems to be working ok') }
+	// const alertMsgForCheck = () => { Alert.alert('your interaction seems to be working ok') }
 
 	return (
 		<View style={styles.backgroundGradient}>
@@ -104,7 +113,7 @@ export default function PersonalProfile() {
 				locations={[0, 0.89]}
 				style={styles.linearGradient}
 			>
-				<View style={styles.container}>
+				<ScrollView style={styles.container}>
 					{/* <Text>PersonalProfile</Text> */}
 					<View style={styles.title}>
 						<TouchableOpacity onPress={Editing ? ConcludeEdit : StartEdit} onLongPress={handleLongPress}>
@@ -121,7 +130,7 @@ export default function PersonalProfile() {
 
 
 					<View style={styles.profilePictureView}>
-						<Pressable style={styles.changeProfilePicBtn} onPress={alertMsgForCheck}>
+						<Pressable style={styles.changeProfilePicBtn} onPress={() => { Alert.alert('TODO: add/change profile image') }}>
 							<Image source={require('../../assets/icons/EditProfileImageIcon.png')} />
 						</Pressable>
 						<View style={styles.profilePicContainer}>
@@ -130,8 +139,8 @@ export default function PersonalProfile() {
 						</View>
 					</View>
 					<View style={styles.nameAndGreeting}>
-						<Text style={styles.greetingTitle}>היי, {formData.name}</Text>
-						<Text style={styles.memberSince}>חבר החל מ{formData.subscribeDate.toLocaleDateString('he-IL', { month: 'long', year: 'numeric' })}</Text>
+						<Text style={{fontFamily: 'openSansBold', fontSize:14.5}}>היי, {formData.name}</Text>
+						<Text style={{fontFamily: 'openSansReg', fontSize:12, color:'#7394E7'}}>חבר החל מ{formData.subscribeDate.toLocaleDateString('he-IL', { month: 'long', year: 'numeric' })}</Text>
 					</View>
 
 					<View style={styles.formFieldsContainer}>
@@ -141,29 +150,29 @@ export default function PersonalProfile() {
 								<Pressable
 									style={[styles.textBoxStyle, { width: 140, }]}
 									onPress={() => navigation.navigate('DropDownScreen', { SetResidence })}>
-									<Text style={{ textAlign: 'right' }}>{residence.city ? `${residence.city}` : 'ישוב'}</Text>
+									<Text style={styles.oSans12r}>{residence.city ? `${residence.city}` : 'ישוב'}</Text>
 								</Pressable>
-								<Text style={styles.addressSubtitle}>ישוב</Text>
+								<Text style={styles.generalSubtitle}>ישוב</Text>
 							</View>
 							<View style={styles.addressDetail}>
 								<Pressable
 									style={[styles.textBoxStyle, { width: 140, }]}
 									onPress={() => navigation.navigate('DropDownSearchStreet', { SetResidence })}>
-									<Text style={{ textAlign: 'right' }}>{residence.street ? `${residence.street}` : 'רחוב'}</Text>
+									<Text style={styles.oSans12r}>{residence.street ? `${residence.street}` : 'רחוב'}</Text>
 								</Pressable>
-								<Text style={styles.addressSubtitle}>רחוב</Text>
+								<Text style={styles.generalSubtitle}>רחוב</Text>
 							</View>
 							<View style={styles.addressDetail}>
 								<TextInput
 									key={residence.streetNum}
-									style={[styles.textBoxStyle, { width: 30 }]}
+									style={[styles.textBoxStyle, styles.oSans12r, { width: 30 }]}
 									placeholder={residence.streetNum ? residence.streetNum.toString() : '00'}
 									value={residence.streetNum ? residence.streetNum.toString() : ''}
 									editable={Editing}
 									keyboardType='numeric'
 									onChangeText={text => SetResidence(pervResidence => ({ ...pervResidence, streetNum: Number(text) }))}
 								/>
-								<Text style={styles.addressSubtitle}>מס׳</Text>
+								<Text style={styles.generalSubtitle}>מס׳</Text>
 							</View>
 
 						</View>
@@ -208,7 +217,7 @@ export default function PersonalProfile() {
 									style={[styles.textBoxStyle, { width: 210 }]}
 									value={password}
 									editable={Editing}
-									onChangeText={() => Alert.alert('change has been made')}
+									onChangeText={() => Alert.alert('TODO: change/reset password?')}
 								/>
 								<Text style={styles.generalSubtitle}>סיסמה</Text>
 							</View>
@@ -219,16 +228,18 @@ export default function PersonalProfile() {
 									style={[styles.textBoxStyle, { width: 210 }]}
 									value={email}
 									editable={Editing}
-									onChangeText={() => Alert.alert('change has been made')}
+									onChangeText={() => Alert.alert('TODO: should kept locked')}
 								/>
 								<Text style={styles.generalSubtitle}>אימייל</Text>
 							</View>
 						</View>
 					</View>
 					<View>
+
+						<Text style={[styles.generalSubtitle, {marginTop: 35,}]}>סטטיסטיקה</Text>
 						<ProfileStatistics />
 					</View>
-				</View>
+				</ScrollView>
 				<View style={styles.profileFooterPressable}>
 					<TouchableOpacity style={[styles.footerTouchable, { width: screenWidth }]} onPress={() => navigation.navigate('ListsMan')}>
 						<Text style={styles.footerText}>סגור וקדימה, לאפליקציה :)</Text>
@@ -263,7 +274,7 @@ const styles = StyleSheet.create({
 	profilePictureView: {
 		zIndex: -10,
 		alignItems: 'center',
-		marginTop: -15,
+		marginTop: -25,
 	},
 	changeProfilePicBtn: {
 		zIndex: 3,
@@ -279,8 +290,8 @@ const styles = StyleSheet.create({
 		shadowRadius: 3.84,
 	},
 	profilePicContainer: {
-		width: 100,
-		height: 100,
+		width: 90,
+		height: 90,
 		overflow: 'hidden',
 		borderRadius: 100,
 		backgroundColor: '#6D8FE6',
@@ -289,8 +300,8 @@ const styles = StyleSheet.create({
 	ProfilePicture: {
 		// zIndex:1,
 		flex: 1,
-		width: 100,
-		top: 5,
+		width: 90,
+		top: 6,
 
 		resizeMode: 'contain',
 	},
@@ -319,6 +330,7 @@ const styles = StyleSheet.create({
 		textAlign: 'right',
 		borderColor: '#ccc',
 		borderWidth: 1,
+		fontFamily:'openSansReg'
 	},
 
 	personalDetails: {
@@ -362,5 +374,21 @@ const styles = StyleSheet.create({
 	footerText: {
 		fontFamily: 'openSansBold',
 		color: '#fff'
+	},
+	oSans12r:{ 
+		textAlign: 'right', 
+		fontFamily: 'openSansReg', 
+		fontSize:12, 
+	},
+
+	generalSubtitle: {
+			textAlign: 'right', 
+			fontFamily: 'openSansBold', 
+			fontSize:13, 
+	},
+	placeHolderText: {
+		fontFamily: 'openSansReg', 
+		fontSize: 12,
+
 	},
 })

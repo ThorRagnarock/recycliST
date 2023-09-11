@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default function ListScreen() {
 
-	const alertMsgForCheck = () => { Alert.alert('your interaction seems to be working ok') }
+	const alertMsgForCheck = () => { Alert.alert('TODO: Work this!!') }
 
 
 	return (

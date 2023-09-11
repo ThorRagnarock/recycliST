@@ -39,7 +39,7 @@ export default function App() {
   return (
     <ContextProvider>
       <NavigationContainer>
-        <NavStack.Navigator initialRouteName='PersonalProfile' screenOptions={{ headerShown: false }}>
+        <NavStack.Navigator initialRouteName='ListsMan' screenOptions={{ headerShown: false }}>
           {/* PersonalProfile */}
           <NavStack.Screen name='Splash' component={Splash} />
           <NavStack.Screen name='OnBoarding' component={OnBoarding} />
@@ -75,3 +75,10 @@ const styles = StyleSheet.create({
   },
 
 })
+
+
+{/*
+Deploy hook:
+https://api.render.com/deploy/srv-cjp28ur6fquc73aq72k0?key=Fh5SMp6Ghj4
+*/
+}

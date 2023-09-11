@@ -14,10 +14,10 @@ export default function Login() {
 	const navigation = useNavigation();
 
 	const resetPassword = () => {
-		Alert.alert('Resetting password');
+		Alert.alert('TODO: password reset');
 	}
 	const submitDetails = () => {
-		Alert.alert("details submitted")
+		Alert.alert("TODO: Submit")
 	}
 	return (
 		<View style={styles.container}>

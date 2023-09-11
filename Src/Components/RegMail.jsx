@@ -4,9 +4,7 @@ import { UserContext2 } from '../Context/ContextProvider'
 
 export default function RegMail({ nextStep }) {
 	const { email, SetEmail } = useContext(UserContext2);
-
 	const [warningSwitch, SetWrningSwitch] = useState(false);
-
 	const confirmAndNextStep = () => {
 		const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -16,8 +14,6 @@ export default function RegMail({ nextStep }) {
 		else {
 			nextStep(email);
 		}
-		// Alert.alert;
-		//nextStep
 	}
 	return (
 		<View style={styles.inputFieldFlex}>
