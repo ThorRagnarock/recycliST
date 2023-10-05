@@ -6,6 +6,8 @@ import 'react-native-gesture-handler';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+
 import ContextProvider from './Src/Context/ContextProvider';
 
 import { StyleSheet, Text, View } from 'react-native';
@@ -38,7 +40,7 @@ export default function App() {
 
   return (
     <ContextProvider>
-      <NavigationContainer>
+      <NavigationContainer>{/* ListsMan */}
         <NavStack.Navigator initialRouteName='ListsMan' screenOptions={{ headerShown: false }}>
           {/* PersonalProfile */}
           <NavStack.Screen name='Splash' component={Splash} />

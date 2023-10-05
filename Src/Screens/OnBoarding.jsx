@@ -81,45 +81,67 @@ const factor = Math.sqrt(height * width) / 0.9;
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
+		flex: 16,
 		alignItems: 'center',
 		backgroundColor: '#FFFEFE',
 	},
 	content: { //that exclude logo and botton		
-		height:'60%',
+		height: '60%',
+		//
+		flex: 4,
 	},
 	infoDiv: {
-		flex:1,
+		flex: 1,
 		alignItems: 'center',
+		justifyContent: "space-around",
+		// borderColor: "#000",
+		// borderWidth:1,
 	},
 	onBoardingTitle: {
-
 		textAlign: 'center',
 		fontFamily: 'openSansBold',
-		fontSize: factor*0.05,
-		marginTop: height*0.02,
+		fontSize: factor * 0.05,
+		// marginTop: height*0.02,
+		flex: 3,
+
 	},
 	splashLogo: {
 		marginTop: '15%',
 		width: 110,
+		//
+		flex: 1,
 	},
+	// 
 	onBoardingInfo: {
-		// zIndex:1,
 		textAlign: 'center',
 		fontFamily: 'openSansReg',
-		fontSize:factor*0.031,
-		
-		marginTop: factor*0.01,
-		// justifyContent:'space-evenly',
+		fontSize: 16,
+		//
+		justifyContent: 'center',
+		alignItems: 'center',
+		flex: 5,
+		marginVertical:10,
+		//
+		// borderColor: "#000",
+		// borderWidth: 1,
 	},
-	onBoardingImage: {	
-		transform: [{scale: height*0.0014}]		
+
+	onBoardingImage: {
+		//transform: [{scale: height*0.0014}]	,
+		// flex:9,	
+		//
+		// borderColor: "#000",
+		// borderWidth:1,
+		aspectRatio: 1,
+		resizeMode: 'contain',
 	},
 	btnsView: { //that's not text!!
 		flex: 1,
 		flexDirection: 'row-reverse',
 		alignItems: 'center',
-		justifyContent: 'center',		
+		justifyContent: 'center',
+		//
+		flex: 1,
 	},
 	nextBoard: {//that's not text!! that's the blue botton itself
 		borderColor: '#074EE8',

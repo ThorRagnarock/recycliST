@@ -1,9 +1,10 @@
 //TODO's:
 /*
-
-תיעוד זמן הצטרפות accountCreated
-אפשרויות לשחזור סיסמה
-
+ככה - -
+תפריט המבורגר
+מסך אודותינו
+מסך אצ׳יבמנטס וניקוד (??)
+פנה אלינו - פותח מייל חדש שמצורף אליו פרטי המשתמש 
 */
 import { 
 	View, 
@@ -113,9 +114,13 @@ export default function PersonalProfile() {
 				locations={[0, 0.89]}
 				style={styles.linearGradient}
 			>
+
+
 				<ScrollView style={styles.container}>
-					{/* <Text>PersonalProfile</Text> */}
-					<View style={styles.title}>
+
+
+					{/* logo and cogwheel */}
+					<View style={[styles.title]}>
 						<TouchableOpacity onPress={Editing ? ConcludeEdit : StartEdit} onLongPress={handleLongPress}>
 							<Image source={require('../../assets/icons/SettingsCogwheel.png')} resizeMode='contain' />
 							{
@@ -127,24 +132,29 @@ export default function PersonalProfile() {
 							<Image source={require('../../assets/icons/recycliSTLogo113.png')} style={styles.LogoImage} resizeMode='contain' />
 						</TouchableOpacity>
 					</View>
+					{/* ////////////////////////// */}
 
 
-					<View style={styles.profilePictureView}>
-						<Pressable style={styles.changeProfilePicBtn} onPress={() => { Alert.alert('TODO: add/change profile image') }}>
-							<Image source={require('../../assets/icons/EditProfileImageIcon.png')} />
-						</Pressable>
-						<View style={styles.profilePicContainer}>
-							<Image source={require('../../assets/icons/profilePicture.png')} style={styles.ProfilePicture} />
+					{/* Image and Name */}
+					<View style={[styles.wrapper, styles.ImageAndName]}>
+						<View style={styles.profilePictureView}>
+							<Pressable style={styles.changeProfilePicBtn} onPress={() => { Alert.alert('TODO: add/change profile image') }}>
+								<Image source={require('../../assets/icons/EditProfileImageIcon.png')} />
+							</Pressable>
+							<View style={styles.profilePicContainer}>
+								<Image source={require('../../assets/icons/profilePicture.png')} style={styles.ProfilePicture} />
 
+							</View>
+						</View>
+						<View style={styles.nameAndGreeting}>
+							<Text style={{ fontFamily: 'openSansBold', fontSize: 14.5 }}>היי, {formData.name}</Text>
+							<Text style={{ fontFamily: 'openSansReg', fontSize: 12, color: '#7394E7' }}>חבר החל מ{formData.subscribeDate.toLocaleDateString('he-IL', { month: 'long', year: 'numeric' })}</Text>
 						</View>
 					</View>
-					<View style={styles.nameAndGreeting}>
-						<Text style={{fontFamily: 'openSansBold', fontSize:14.5}}>היי, {formData.name}</Text>
-						<Text style={{fontFamily: 'openSansReg', fontSize:12, color:'#7394E7'}}>חבר החל מ{formData.subscribeDate.toLocaleDateString('he-IL', { month: 'long', year: 'numeric' })}</Text>
-					</View>
 
-					<View style={styles.formFieldsContainer}>
+					{/* d */}
 
+					<View style={[styles.formFieldsContainer, styles.wrapper]}>
 						<View style={[styles.addressDetails, {}]}>
 							<View style={styles.addressDetail}>
 								<Pressable
@@ -234,7 +244,9 @@ export default function PersonalProfile() {
 							</View>
 						</View>
 					</View>
-					<View>
+
+					{/* Statistics information */}
+					<View style={styles.wrapper}>
 
 						<Text style={[styles.generalSubtitle, {marginTop: 35,}]}>סטטיסטיקה</Text>
 						<ProfileStatistics />
@@ -254,14 +266,21 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	container: {
-		flex: 1,
+		flex: 21,
 
-		// zIndex:1,
+
+		// borderColor:"#00f",
+		// borderWidth:3,
+		// borderStyle:"dashed"
 	},
+
 	linearGradient: {
 		flex: 1,
 		width: '100%',
 		alignItems: 'center',
+	},
+	LogoImage: {
+		width: 60,
 	},
 	title: {
 		flexDirection: 'row-reverse',
@@ -270,11 +289,33 @@ const styles = StyleSheet.create({
 		width: 330,
 
 		top: '9%',
+		// flex: 8,
+	},
+	wrapper:{
+		flex: 7,
+
+
+
+		// borderColor: "#f00",
+		// borderWidth: 1,
+	},
+	
+	ImageAndName:{
+		flex:10,
+		// flexDirection:"column",
+		// flexWrap:'wrap-reverse',
+		// alignItems:'center',
+		// alignContent:"center"
 	},
 	profilePictureView: {
+		flex: 7,
 		zIndex: -10,
 		alignItems: 'center',
-		marginTop: -25,
+		// marginTop: -25,
+	},
+	nameAndGreeting: {
+		flex: 3,
+		alignItems: 'center',
 	},
 	changeProfilePicBtn: {
 		zIndex: 3,
@@ -298,30 +339,31 @@ const styles = StyleSheet.create({
 
 	},
 	ProfilePicture: {
-		// zIndex:1,
 		flex: 1,
 		width: 90,
 		top: 6,
-
 		resizeMode: 'contain',
 	},
-	LogoImage: {
-		width: 60,
+	
+	formFieldsContainer: {
+		flex:21,
+		flexDirection:"column",
+		flexWrap:'wrap-reverse',
+		alignItems:'center'
 	},
+	
 	addressDetails: {
 		marginTop: 15,
 		flexDirection: 'row-reverse',
 		justifyContent: 'space-between',
+		flex:10,
 	},
 	addressDetail: {
 		textAlign: 'right',
 		alignItems: 'flex-end',
 		flexDirection: 'column'
 	},
-	nameAndGreeting: {
-		alignItems: 'center',
-		marginTop: 10,
-	},
+	
 	textBoxStyle: {
 		// zIndex:-1,
 
@@ -369,7 +411,7 @@ const styles = StyleSheet.create({
 		// width:'100%',
 		justifyContent: 'center',
 		alignItems: 'center',
-		padding: 20,
+		padding: 30,
 	},
 	footerText: {
 		fontFamily: 'openSansBold',

@@ -1,13 +1,11 @@
 import { View, Text,TouchableOpacity,StyleSheet, Image } from 'react-native'
-import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
-
-
-export default function ListScreen() {
+import React from 'react';
+  
+export default function ListScreen({ id }) {
+	const { id }= route.params; //to fetch the list items
 
 	const alertMsgForCheck = () => { Alert.alert('TODO: Work this!!') }
-
-
 	return (
 		<View style={styles.backgroundGradient}>
 			<LinearGradient
@@ -19,20 +17,15 @@ export default function ListScreen() {
 			>
 				<View style={styles.container}>
 					<View style={styles.title}>
-
-
 					<TouchableOpacity onPress={Editing ? ConcludeEdit : StartEdit} onLongPress={handleLongPress}>
 						
 						<Image source={require('../../assets/icons/SettingsCogwheel.png')} resizeMode='contain' />
-
-
 						{
 							textVisible &&
 							<Animated.Text style={{ fontFamily: 'openSansReg', fontSize: 11, color: '#7394E7', opacity: animatedFadeout }}>עריכה</Animated.Text>
 						}
-
-
 					</TouchableOpacity>
+
 					<TouchableOpacity onLongPress={() => navigation.navigate('SignInScreen')}>
 						<Image source={require('../../assets/icons/recycliSTLogo113.png')} style={styles.LogoImage} resizeMode='contain' />
 					</TouchableOpacity>
