@@ -2,7 +2,6 @@ import { View, TouchableOpacity, StyleSheet, Image, Alert, TextInput, SafeAreaVi
 import React, { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-// import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { MenuProvider } from 'react-native-popup-menu';
@@ -225,6 +224,7 @@ export default function ListsMan() {
 						backgroundColor: 'grey',
 					}}
 				>
+					<HamburgerMenu/>
 					{/* Your Drawer Content */}
 				</Animated.View>
 				{/* THE HAMBURGER MENU DRAWER SHOULD BE RIGHT HERE  */}
