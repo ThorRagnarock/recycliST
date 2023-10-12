@@ -20,10 +20,11 @@ import RegNewAccount from './Src/Screens/RegNewAccount';
 import PersonalProfile from './Src/Screens/PersonalProfile';
 import DropDownScreen from './Src/Screens/DropDownScreen';// **
 import DropDownSearchStreet from './Src/Screens/DropDownSearchStreet';
-// import DropDownMachine  from './Src/Screens/DropDownMachine';
+import AboutUs from './Src/Screens/AboutUs';// import DropDownMachine  from './Src/Screens/DropDownMachine';
 
-
+import DisplayBadges from './Src/Screens/DisplayBadges';
 import ListsMan from './Src/Screens/ListsMan';
+import ListScreen from './Src/Screens/ListScreen';
 
 // SplashScreen.preventAutoHideAsync();
 // const navigation  = useNavigation();
@@ -41,7 +42,7 @@ export default function App() {
   return (
     <ContextProvider>
       <NavigationContainer>{/* ListsMan */}
-        <NavStack.Navigator initialRouteName='ListsMan' screenOptions={{ headerShown: false }}>
+        <NavStack.Navigator initialRouteName='PersonalProfile' screenOptions={{ headerShown: false }}>
           {/* PersonalProfile */}
           <NavStack.Screen name='Splash' component={Splash} />
           <NavStack.Screen name='OnBoarding' component={OnBoarding} />
@@ -55,6 +56,10 @@ export default function App() {
           {/* <NavStack.Screen name='DropDownMachine' component={DropDownMachine}/> */}
 
           <NavStack.Screen name='ListsMan' component={ListsMan} />
+
+          <NavStack.Screen name='AboutUs' component={AboutUs}/>
+          <NavStack.Screen name='DisplayBadges' component={DisplayBadges} />
+          <NavStack.Screen name='ListScreen' component={ListScreen}/>
         </NavStack.Navigator>
 
       </NavigationContainer>

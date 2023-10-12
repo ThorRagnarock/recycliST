@@ -2,10 +2,12 @@ import { Text, TouchableOpacity, Image, Alert, StyleShee, View, StyleSheet } fro
 import { useNavigation } from '@react-navigation/native';
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 
-import React from 'react';
+import React, { useState } from 'react';
 
-const ListingsItem = ({ id, pinned, listName, listColor, listOrder }) => {
+const ListingsItem = ({ headerId, listName}) => {
 	const navigation = useNavigation();
+	const [ listColor, SetListColor ] = useState("#D9D9D9");
+	const [ pinned, SetPinned ] = useState(false);
 
 	const ContextMenu = (value) => {
 		switch (value) {
@@ -35,21 +37,18 @@ const ListingsItem = ({ id, pinned, listName, listColor, listOrder }) => {
 	return (
 		<TouchableOpacity onPress={(event) => {
 			event.stopPropagation();
-			Alert.alert(listName || "רשימה חדשה");
-			//navigation.navigate('ListScreen', { id: id });  <-- later need to be fixed
+			navigation.navigate('ListScreen', { headerId }); //Something like collection name
 		}}
-			style={[styles.listsItem, { borderColor: listColor || "#D9D9D9" }]}
+			style={[styles.listsItem, { borderColor: listColor }]}
 		>
-			{
+			{	//if pinned so //TODO: add the pinned to the top of the list...
 				pinned &&
 				<Image source={require('../../assets/icons/pinned.png')} style={{ marginRight: 10 }} />
 			}
-
 			<Text style={styles.textStyle}>{listName || "רשימה חדשה"}</Text>
-
 			<Menu>
 				<MenuTrigger>
-					<Image source={require('../../assets/icons/threeDotsIcon.png')}  resizeMode='contain' style={styles.menuTrigger} />
+					<Image source={require('../../assets/icons/threeDotsIcon.png')} resizeMode='contain' style={styles.menuTrigger} />
 				</MenuTrigger>
 
 				<MenuOptions customStyles={{
@@ -59,14 +58,13 @@ const ListingsItem = ({ id, pinned, listName, listColor, listOrder }) => {
 					}
 				}}>
 					{/* <View style={styles.contextMenuFrame}> */}
-
 					<MenuOption>
-						<Text style={{ fontWeight: 'bold', padding: 10 }}>ביטול</Text>
+						<Text style={{ fontWeight: 'bold', padding: 10, textAlign: 'right', backgroundColor: "#ddd", }}>סגור</Text>
 					</MenuOption>
 
 					<MenuOption value="togglePin" onSelect={() => ContextMenu('togglePin')}>
 						<View style={styles.ContextMenuItem}>
-							<Image source={require('../../assets/icons/pinned.png')} style={{ marginLeft: 8, paddingTop:10 }} />
+							<Image source={require('../../assets/icons/pinned.png')} style={{ marginLeft: 8, paddingTop: 10 }} />
 							<Text>הסר/הוסף נעוץ</Text>
 						</View>
 					</MenuOption>

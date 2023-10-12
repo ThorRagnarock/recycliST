@@ -5,59 +5,27 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { MenuProvider } from 'react-native-popup-menu';
-
 import HamburgerMenu from '../Components/HamburgerMenu';
-
 import ListingsItem from '../Components/ListingItem';
 
-/*
-function HamburgerDrawer() {
-	return (
-		<View style={styles.container}>
-			<LinearGradient
-				colors={['rgba(161, 178, 166, 0.75)', 'rgba(255, 255, 255, 0.00)']}
-				start={{ x: 0, y: 0 }}
-				end={{ x: 1, y: 1 }}
-				locations={[0, 0.89]}
-				style={styles.linearGradient}
-			>
-					<View style={styles.hamburgerMenuItems}>
-						<View style={styles.menuItem}>
-							<Pressable onPress={() => alertMsgForCheck}>
-								<Text style={styles.hbrgrItemText}>פרופיל</Text>
-								<Image source={require('../../assets/icons/User.png')} />
-							</Pressable>
-						</View>
-						<View style={styles.menuItem}>
-							<Pressable onPress={() => alertMsgForCheck}>
-								<Text style={styles.hbrgrItemText}>תגים</Text>
-								<Image source={require('../../assets/icons/Star.png')} />
-							</Pressable>
-						</View>
-						<View style={styles.menuItem}>
-							<Pressable onPress={() => alertMsgForCheck}>
-								<Text style={styles.hbrgrItemText}>אודותינו</Text>
-								<Image source={require('../../assets/icons/Megaphone.png')} />
-							</Pressable>
-						</View>
-						<View style={styles.menuItem}>
-							<Pressable onPress={() => alertMsgForCheck}>
-								<Text style={styles.hbrgrItemText}>פניה</Text>
-								<Image source={require('../../assets/icons/envelopIcon.png')} />
-							</Pressable>
-						</View>
-
-					</View>
-
-				<Text>HamburgerMenu</Text>
-			</LinearGradient>
-		</View>
-	);
-	
-}
-*/
-
 export default function ListsMan() {
+
+	const listingsData = [
+		{
+			headerId: "00001",
+			pinned: true,
+			listName: "ברוכים הבא ל-recycliST",
+			listOrder: "1",
+		},
+		{
+			headerId: "00002",
+			pinned: false,
+			listName: "לחץ על + בסרגל התחתון לרשימה חדשה",
+			listOrder: "1",
+			listColor: "#FF8A00",
+		}
+	];
+	
 	const screenWidth = Dimensions.get('window').width;
 	// const screenHeight = Dimensions.get('window').width;
 	const navigation = useNavigation();
@@ -66,12 +34,12 @@ export default function ListsMan() {
 	const [addListName, SetAddListName] = useState('');
 	const [toggleAdd_Search, SetToggleAdd_Search] = useState(true);
 	const [drawerPositon, SetDrawerPosition] = useState(new Animated.Value(-300));	//THE DRAWER INITIAL POSITION
-	const [switchViewHamburger, SetSwitchViewHamburger] = useState(false);
-	const toggleDrawer = () => {  
-		const toValue = drawerPositon._value === 0 ? -300:0;
+	// const [switchViewHamburger, SetSwitchViewHamburger] = useState(false);
+	const toggleDrawer = () => {
+		const toValue = drawerPositon._value === 0 ? -300 : 0;
 		Animated.timing(drawerPositon, {
 			toValue,
-			duration:150, 															//VELOCITY???
+			duration: 150, 															//VELOCITY???
 			easing: Easing.inOut(Easing.ease),  // Add this line
 
 			useNativeDriver: false,
@@ -101,14 +69,8 @@ export default function ListsMan() {
 		)
 		SetAddListName('');//Nullifies the entry field
 	}
-	// const OpenHamburgerMenu = () => {}
-
-	const PinLatestList = (event) => { Alert.alert('TODO: pin list '), event }
-
-	const DeleteListing = async (id, listName) => {
-		// if (!id || !listName) {
-		// 	Alert.alert('אהמ!', 'לא נבחרה רשימה למחיקה'); return;
-		// }
+	const DeleteListing = async (headerId, listName) => {
+		
 		Alert.alert(
 			'אשר מחיקה',
 			`למחוק את '${listName}'?`,
@@ -119,9 +81,9 @@ export default function ListsMan() {
 						Alert.alert('אישור סופי', `מחיקת '${listName}' לא תהיה אפשרית לביטול בדיעבד. להמשיך?`,
 							[
 								{ text: 'חזור', style: 'cancel' },
-								{ text: 'מחק', onPress: () => {  Alert.alert("פריט נמחק")/*calling a function to delete this listing*/ }, },
+								{ text: 'מחק', onPress: () => { Alert.alert("פריט נמחק")/*calling a function to delete this listing*/ }, },
 							]
-						) 
+						)
 					},
 				},
 			]
@@ -143,14 +105,7 @@ export default function ListsMan() {
 								<TouchableOpacity onPress={toggleDrawer}>
 									<Image source={require('../../assets/icons/hambungerIcon.png')} resizeMode='contain' />
 								</TouchableOpacity>
-								{/* <TouchableOpacity onPress={()=>navigation.openDrawer()}> */}
 
-								{/* <Image source={require('../../assets/icons/hambungerIcon.png')} resizeMode='contain' />
-								</TouchableOpacity> */}
-
-								<TouchableOpacity style={{ marginRight: 20 }} onPress={() => PinLatestList()}>
-									<Image source={require('../../assets/icons/pinned.png')} resizeMode='contain' />
-								</TouchableOpacity>
 							</View>
 							<Image source={require('../../assets/icons/recycliSTLogo113.png')} style={{ width: 60 }} resizeMode='contain' />
 						</View>
@@ -161,7 +116,7 @@ export default function ListsMan() {
 									toggleAdd_Search ?
 										(
 											<View style={styles.listSearch}>
-												<Image source={require('../../assets/icons/magnifingGlassSearch.png')} style={{ marginRight: 10}} />
+												<Image source={require('../../assets/icons/magnifingGlassSearch.png')} style={{ marginRight: 10 }} />
 												<TextInput
 													style={[styles.listsSearchBar,]}
 													value={searchValue}
@@ -182,7 +137,7 @@ export default function ListsMan() {
 													placeholderTextColor="#000"
 												/>
 												<TouchableOpacity onPress={() => CreateNewListing(addListName)}>
-													<Image source={require('../../assets/icons/addListDocument.png')} style={[ { width: 24, marginLeft: 8, marginRight: 10 }]} resizeMode='contain' />
+													<Image source={require('../../assets/icons/addListDocument.png')} style={[{ width: 24, marginLeft: 8, marginRight: 10 }]} resizeMode='contain' />
 												</TouchableOpacity>
 											</View>
 										)
@@ -190,22 +145,10 @@ export default function ListsMan() {
 							</View>
 							<MenuProvider customStyles={{ menuProviderWrapper: [{ height: 350 }] }}>
 								<SafeAreaView style={[{ flex: 14, marginTop: 50 }]}>
-									<ListingsItem
-										id={"00001"}
-										pinned={true}
-										listName={"ברוכים הבא ל-recycliST"}
-										listOrder={"1"}
-									/>
-									<ListingsItem
-										id={"00002"}
-										pinned={false}
-										listName={"לחץ על + בסרגל התחתון לרשימה חדשה"}
-										listOrder={"1"}
-										listColor={"#FF8A00"}
-									/>
 									{
-										switchViewHamburger &&
-										<HamburgerMenu />
+										listingsData.map((listing, index) => (
+											<ListingsItem key={index} {...listing} />
+										))
 									}
 								</SafeAreaView>
 							</MenuProvider>
@@ -224,14 +167,11 @@ export default function ListsMan() {
 						backgroundColor: 'grey',
 					}}
 				>
-					<HamburgerMenu/>
-					{/* Your Drawer Content */}
+					<HamburgerMenu />
 				</Animated.View>
-				{/* THE HAMBURGER MENU DRAWER SHOULD BE RIGHT HERE  */}
-
 
 				<View style={[styles.profileFooterPressable, { width: screenWidth }]}>
-					<TouchableOpacity onPress={(id, listName) => DeleteListing(id, listName)}>
+					<TouchableOpacity onPress={(headerId, listName) => DeleteListing(headerId, listName)}>
 						<Image source={require('../../assets/icons/garbageCanWhite.png')} resizeMode='contain' />
 					</TouchableOpacity>
 
@@ -258,13 +198,13 @@ const styles = StyleSheet.create({
 	backgroundGradient: {},
 	LogoImage: {},
 	inlineImage: {},
-	listsUtils: { },
+	listsUtils: {},
 
 	linearGradient: {
 		flex: 1,
 		width: '100%',
 		alignItems: 'center',
-	}, 
+	},
 	title: {
 		flexDirection: 'row-reverse',
 		alignItems: 'center',
@@ -323,3 +263,8 @@ All the rest is returned from the DB
       console.log(docs);
     }
   }) */}
+
+
+{/* <TouchableOpacity style={{ marginRight: 20 }} onPress={() => PinLatestList()}>
+		<Image source={require('../../assets/icons/pinned.png')} resizeMode='contain' />
+	</TouchableOpacity> */}
