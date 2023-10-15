@@ -284,22 +284,13 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		width: 330,
-
-		// flex: 8,
 	},
 	wrapper: {
 		flex: 7,
-		// borderColor: "#f00",
-		// borderWidth: 1,
+		
 	},
-
 	ImageAndName: {
 		flex: 10,
-		//borderWidth: 2, borderColor: "#FFA", borderStyle: "dashed"
-		// flexDirection:"column",
-		// flexWrap:'wrap-reverse',
-		// alignItems:'center',
-		// alignContent:"center"
 	},
 	profilePictureView: {
 		flex: 7,

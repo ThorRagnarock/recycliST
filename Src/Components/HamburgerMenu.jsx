@@ -1,56 +1,18 @@
-import { View, Text, StyleSheet, Image, Pressable, SafeAreaView, Alert, Dimensions, Linking, Platform } from 'react-native'
+import { View, Text, StyleSheet, Image, Pressable, SafeAreaView, Alert, Dimensions} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import * as Application from 'expo-application';
-import * as Device from 'expo-device';
+
 
 
 import React, { useState, } from 'react';
+import { sendEmail } from '../../utils/Feedback';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export default function HamburgerMenu() {
 	const alertMsgForCheck = () => { Alert.alert('your interaction seems to be working ok') }
 
-	const sendEmail = () => {
-		const email = 'recyclist.sprt@gmail.com';
-		const subject = encodeURIComponent('פניית משתמש מהמגירה');
-
-		const timestamp = new Date().toISOString();
-		const systemInfo = {
-			reportingEntity: "user",
-			timeStamp: timestamp,
-			os: Device.osName,
-			osVersion: Device.osVersion,
-			deviceModel: Device.modelName,
-			// os: Platform.OS,
-			// osVersion: Platform.Version,
-			appVersion: Application.nativeApplicationVersion,
-			mongoDBUserID: "///",		//TODO - import this detail here.. 
-		};
-		const sysInfoString = Object.entries(systemInfo)
-			.map(([key, value]) => `${key}: ${value}`)
-			.join('\r\n'); // Replacing '\n' with '%0A'
-
-		const userMessage = ('\r\n\__________________________________\r\nמכאן ומטה, כתוב את פנייתך :)');
-		const fullMessage = `${sysInfoString}\n\n${userMessage}`;
-
-		const body = encodeURIComponent(fullMessage);
-		// const url = `mailto:${email}?subject=${subject}&body=${body}`;
-
-		const url = `mailto:${email}?subject=${subject}&body=${body}`;
-
-
-
-		Linking.canOpenURL(url).then(supported => {
-			if (supported) {
-				Linking.openURL(url);
-			} else {
-				console.log(`Don't know how to open this URL: ${url}`);
-			}
-		})
-	}
-
+	{/** MAIL FUNC USED TO BE HERE, also imported *  and linking */}
 
 	const navigation = useNavigation();
 	return (
@@ -102,7 +64,7 @@ export default function HamburgerMenu() {
 						</Pressable>
 					</View>
 					<View style={styles.menuItem}>
-						<Pressable onPress={() => sendEmail()}		//Open mail server with 
+					<Pressable onPress={() => sendEmail()} //Open mail server
 							style={{ flexDirection: 'row', alignItems: 'center' }}
 						>
 							<Text style={styles.hbrgrItemText}>פניה</Text>

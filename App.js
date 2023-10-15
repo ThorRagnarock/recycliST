@@ -10,7 +10,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import ContextProvider from './Src/Context/ContextProvider';
 
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import Login from './Src/Screens/Login';
 import Splash from './Src/Screens/Splash';
@@ -36,13 +36,14 @@ export default function App() {
   const [isLoaded] = useFonts({
     "openSansReg": require('./assets/fonts/static/OpenSans-Regular.ttf'),
     "openSansBold": require('./assets/fonts/static/OpenSans-Bold.ttf'),
+    "openSansLightItalic": require('./assets/fonts/static/OpenSans-LightItalic.ttf')
   });
   if (!isLoaded) return null;
 
   return (
     <ContextProvider>
       <NavigationContainer>{/* ListsMan */}
-        <NavStack.Navigator initialRouteName='PersonalProfile' screenOptions={{ headerShown: false }}>
+        <NavStack.Navigator initialRouteName='ListsMan' screenOptions={{ headerShown: false }}>
           {/* PersonalProfile */}
           <NavStack.Screen name='Splash' component={Splash} />
           <NavStack.Screen name='OnBoarding' component={OnBoarding} />
@@ -51,15 +52,15 @@ export default function App() {
           <NavStack.Screen name='RegNewAccount' component={RegNewAccount} />
           <NavStack.Screen name='PersonalProfile' component={PersonalProfile} />
 
-          <NavStack.Screen name='DropDownScreen' component={DropDownScreen}/>
-          <NavStack.Screen name='DropDownSearchStreet' component={DropDownSearchStreet}/>
+          <NavStack.Screen name='DropDownScreen' component={DropDownScreen} />
+          <NavStack.Screen name='DropDownSearchStreet' component={DropDownSearchStreet} />
           {/* <NavStack.Screen name='DropDownMachine' component={DropDownMachine}/> */}
 
           <NavStack.Screen name='ListsMan' component={ListsMan} />
 
-          <NavStack.Screen name='AboutUs' component={AboutUs}/>
+          <NavStack.Screen name='AboutUs' component={AboutUs} />
           <NavStack.Screen name='DisplayBadges' component={DisplayBadges} />
-          <NavStack.Screen name='ListScreen' component={ListScreen}/>
+          <NavStack.Screen name='ListScreen' component={ListScreen} />
         </NavStack.Navigator>
 
       </NavigationContainer>

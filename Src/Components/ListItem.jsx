@@ -1,26 +1,45 @@
 import { Text, TouchableOpacity, Image, Alert, View, StyleSheet } from 'react-native';
-import React from 'react'
+import React, {useState} from 'react';
+import { sendEmail } from '../../utils/Feedback';
 
-export default function ListItem({ userItemStr, tickToggle, groceryPoints, colorCodes, feedBackFlag }) {
 
+const iconList = {
+	blue: require('../../assets/recyclingIcons/blue.png'),
+	brown: require('../../assets/recyclingIcons/brown.png'),
+	green: require('../../assets/recyclingIcons/green.png'),
+	orange: require('../../assets/recyclingIcons/orange.png'),
+	purple: require('../../assets/recyclingIcons/purple.png'),
+	yellow: require('../../assets/recyclingIcons/yellow.png'),
+};
+export default function ListItem({ userItemStr, tickToggle: initChecked, groceryPoints, colorCodes, feedBackFlag, _id, toggleTick }) {
+
+	const sendFeedbackMail= () => {
+		const email = 'recyclist.sprt@gmail.com';
+		const subject = encodeURIComponent('grocery composite feedback');
+
+	}
+
+	const [tickToggle, SetToggleTicked] = useState(initChecked);
+
+	const tickedStyle = tickToggle ? styles.tickedDisplay : styles.untickedDisplay;
 	const renderRecyclingIcons = () => {
+
 		return colorCodes.map((color, index) => {
-			const iconName = require(`../../assets/recyclingIcons/${color}.png`);
 			return (
 				<Image
 					key={index}
-					source={iconName}
+					source={iconList[color]}
 					resizeMode='contain'
-					style={{ width: 30, height: 30 }}
+					style={[styles.recycleIcons, { margin: 3 }]}
 				/>
 			);
 		});
 	};
 	return (
 		//, userItemStr, tickToggle, groceryPoints , colorCodes, feedBackFlag 
-		<View>
-			<Text>ListItem</Text>
-			<TouchableOpacity onPress={() => ToggleTicked(prevState => !prevState)}
+		<View style={styles.groceryRow}>
+			<TouchableOpacity
+				onPress={() => toggleTick(_id.$oid)}
 				style={styles.listTicker}
 			>
 				{
@@ -31,15 +50,53 @@ export default function ListItem({ userItemStr, tickToggle, groceryPoints, color
 						<Image source={require('../../assets/icons/tickedXcircle.png')} resizeMode='contain' />
 				}
 			</TouchableOpacity>
-			<Text style={styles.userItemStr}>טקסט מצרך לדוגמא</Text>
+			<Text style={[styles.userItemStr, tickedStyle]}>{userItemStr}</Text>
 			<View style={styles.recyclingComposite}>
 				{renderRecyclingIcons()}
 			</View>
+			{/** DELETE ITEM */}
+			<TouchableOpacity style={{}} onPress={{}}> 
+				<Image source={require('../../assets/icons/closingEx.png')} resizeMode='contain' />
+			</TouchableOpacity>
+
+			{/** FEEDBACK ITEM */}
+			<TouchableOpacity style={{ marginRight: 15 }} onPress={() => sendEmail(userItemStr)}>
+				<Image source={require('../../assets/icons/CommentBubble.png')} resizeMode='contain' />
+			</TouchableOpacity>
 		</View>
 	)
 }
 
-
 const styles = StyleSheet.create({
 
+	userItemStr: {
+		width: 160,
+		textAlign: 'right',
+		fontFamily: 'openSansReg',
+		fontSize: 15,
+	},
+	groceryRow: {
+		borderTopColor: "#CCC",
+		borderTopWidth: 1,
+		flexDirection: 'row-reverse',
+		alignItems: 'center',
+
+		// alignItems: 'center',
+	},
+	listTicker: {
+		padding: 10
+	},
+	recyclingComposite: {
+		flexDirection: 'row-reverse',
+		width: 100,
+	},
+	recycleIcons: {
+		width: 20,
+		height: 20,
+	},
+	tickedDisplay:{
+		color:"#CCC",
+		fontFamily:"openSansLightItalic",
+
+	},
 })
