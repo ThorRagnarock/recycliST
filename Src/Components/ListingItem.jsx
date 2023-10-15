@@ -91,6 +91,8 @@ const ListingsItem = ({ headerId, listName}) => {
 						</View>
 					</MenuOption>
 
+					{/** THAT OPTION (MAIL) ISNT WORKING FROM HERE BECAUSE I DIDNt linked it yet */}
+
 					<MenuOption value="shareMail" onSelect={() => ContextMenu('shareMail')}>
 						<View style={styles.ContextMenuItem}>
 							<Image source={require('../../assets/icons/mailShare.png')} style={{ marginLeft: 8 }} />

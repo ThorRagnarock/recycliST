@@ -2,7 +2,6 @@ import { Text, TouchableOpacity, Image, Alert, View, StyleSheet } from 'react-na
 import React, {useState} from 'react';
 import { sendEmail } from '../../utils/Feedback';
 
-
 const iconList = {
 	blue: require('../../assets/recyclingIcons/blue.png'),
 	brown: require('../../assets/recyclingIcons/brown.png'),
@@ -11,19 +10,55 @@ const iconList = {
 	purple: require('../../assets/recyclingIcons/purple.png'),
 	yellow: require('../../assets/recyclingIcons/yellow.png'),
 };
-export default function ListItem({ userItemStr, tickToggle: initChecked, groceryPoints,packaging,  colorCodes, feedBackFlag, _id, toggleTick }) {
+
+const colorsHex = {
+	green: '#309600',
+	blue: '#001AFF',
+	orange: '#FF8A00',
+	purple: '#BB007B',
+	brown: '#650000',
+	yellow: '#FFD600',
+}
+export default function ListItem({ userItemStr, tickToggle: initChecked, groceryPoints,packaging,  colorCodes, feedBackFlag: initFeedbackFlag, _id, toggleTick }) {
 
 	const sendFeedbackMail= () => {
 		const email = 'recyclist.sprt@gmail.com';
 		const subject = encodeURIComponent('grocery composite feedback');
 
 	}
-
+	const [feedbackFlag, SetFeedbackFlag]= useState(initFeedbackFlag);
 	const [tickToggle, SetToggleTicked] = useState(initChecked);
 
 	const tickedStyle = tickToggle ? styles.tickedDisplay : styles.untickedDisplay;
-	const renderRecyclingIcons = () => {
 
+	const feedbackMan = () => {
+		sendEmail(userItemStr, packaging).then((success)=>{ if (success){SetFeedbackFlag(true)}})
+	};
+	const renderVisualization = () => {
+		const maxWidth = 50; // The width of the biggest rectangle
+		return (
+			<View style={{ alignItems: 'flex-start', height: 20, width: maxWidth }}>
+				{colorCodes.map((color, index) => {
+					const currentWidth = maxWidth - index * 15;
+					return (
+						<View
+							key={index}
+							style={{
+								width: maxWidth - index * 15,
+								height: 17,
+								backgroundColor: colorsHex[color],
+								borderRadius: 19,
+								marginBottom: 20,
+								position: 'absolute',  
+								left: maxWidth - currentWidth,
+							}}
+						/>
+					)
+				})}
+			</View>
+		)
+	}
+	const renderRecyclingIcons = () => {
 		return colorCodes.map((color, index) => {
 			return (
 				<Image
@@ -36,7 +71,6 @@ export default function ListItem({ userItemStr, tickToggle: initChecked, grocery
 		});
 	};
 	return (
-		//, userItemStr, tickToggle, groceryPoints , colorCodes, feedBackFlag 
 		<View style={styles.groceryRow}>
 			<TouchableOpacity
 				onPress={() => toggleTick(_id.$oid)}
@@ -51,18 +85,36 @@ export default function ListItem({ userItemStr, tickToggle: initChecked, grocery
 				}
 			</TouchableOpacity>
 			<Text style={[styles.userItemStr, tickedStyle]}>{userItemStr}</Text>
-			<View style={styles.recyclingComposite}>
-				{renderRecyclingIcons()}
-			</View>
-			{/** DELETE ITEM */}
-			<TouchableOpacity style={{}} onPress={{}}> 
-				<Image source={require('../../assets/icons/closingEx.png')} resizeMode='contain' />
-			</TouchableOpacity>
 
-			{/** FEEDBACK ITEM */}
-			<TouchableOpacity style={{ marginRight: 15 }} onPress={() => sendEmail(userItemStr, packaging)}>
-				<Image source={require('../../assets/icons/CommentBubble.png')} resizeMode='contain' />
-			</TouchableOpacity>
+			<View style={styles.recyclingComposite}>
+				{
+					//TODO - change the DB accordingly
+					!tickToggle ?
+						renderRecyclingIcons()
+						:
+						<Text style={[styles.tickedDisplay, {marginRight:30}]}>{groceryPoints}</Text>
+				}
+			</View>
+			{
+				tickToggle
+					? (renderVisualization())
+					: (
+						<>
+							{/** DELETE ITEM */}
+							<TouchableOpacity style={{}} onPress={() => Alert.alert("TODO: DELETE ITEM")}>
+								<Image source={require('../../assets/icons/closingEx.png')} resizeMode='contain' />
+							</TouchableOpacity>
+
+							{/** FEEDBACK ITEM ===> () => sendEmail(userItemStr, packaging) */}
+							<TouchableOpacity style={{ marginRight: 15 }} onPress={feedbackMan}>
+								<Image source={feedbackFlag
+									? require('../../assets/icons/commentRecieved.png')
+									: require('../../assets/icons/CommentBubble.png')
+								} resizeMode='contain' />
+							</TouchableOpacity>
+						</>
+					)
+			}
 		</View>
 	)
 }
@@ -95,8 +147,7 @@ const styles = StyleSheet.create({
 		height: 20,
 	},
 	tickedDisplay:{
-		color:"#CCC",
+		color:"#AAA",
 		fontFamily:"openSansLightItalic",
-
 	},
 })
