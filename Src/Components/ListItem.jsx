@@ -11,7 +11,7 @@ const iconList = {
 	purple: require('../../assets/recyclingIcons/purple.png'),
 	yellow: require('../../assets/recyclingIcons/yellow.png'),
 };
-export default function ListItem({ userItemStr, tickToggle: initChecked, groceryPoints, colorCodes, feedBackFlag, _id, toggleTick }) {
+export default function ListItem({ userItemStr, tickToggle: initChecked, groceryPoints,packaging,  colorCodes, feedBackFlag, _id, toggleTick }) {
 
 	const sendFeedbackMail= () => {
 		const email = 'recyclist.sprt@gmail.com';
@@ -60,7 +60,7 @@ export default function ListItem({ userItemStr, tickToggle: initChecked, grocery
 			</TouchableOpacity>
 
 			{/** FEEDBACK ITEM */}
-			<TouchableOpacity style={{ marginRight: 15 }} onPress={() => sendEmail(userItemStr)}>
+			<TouchableOpacity style={{ marginRight: 15 }} onPress={() => sendEmail(userItemStr, packaging)}>
 				<Image source={require('../../assets/icons/CommentBubble.png')} resizeMode='contain' />
 			</TouchableOpacity>
 		</View>

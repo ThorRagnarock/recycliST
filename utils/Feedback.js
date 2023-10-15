@@ -2,7 +2,7 @@ import { Linking } from 'react-native'
 import * as Application from 'expo-application';
 import * as Device from 'expo-device';
 
-export const sendEmail = (groceryArray) => {
+export const sendEmail = (groceryArray, packaging = []) => {
 	try {
 		
 		const email = 'recyclist.sprt@gmail.com';
@@ -31,9 +31,10 @@ export const sendEmail = (groceryArray) => {
 		} else {
 			console.log("case of groceries feedback CHECKED");
 
-			// const groceryListStr = groceryArray.join('\r\n');
-			console.log(groceryArray);
-			userMessage = `\r\n\__________________________________\r\n${groceryArray}\r\n מכאן ומטה, כתוב אילו מוצרי לוואי וסוג פסולת מוצר זה מייצר`;
+			const packagingList = packaging.join(', ');
+			userMessage = `\r\n\__________________________________\r\n${groceryArray}\r\n${packagingList}\r\n מכאן ומטה, כתוב אילו מוצרי לוואי וסוג פסולת מוצר זה מייצר`;
+			console.log(userMessage);
+
 		}
 		const fullMessage = `${sysInfoString}\n\n${userMessage}`;
 		const body = encodeURIComponent(fullMessage);
