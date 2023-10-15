@@ -21,11 +21,6 @@ const colorsHex = {
 }
 export default function ListItem({ userItemStr, tickToggle: initChecked, groceryPoints,packaging,  colorCodes, feedBackFlag: initFeedbackFlag, _id, toggleTick }) {
 
-	const sendFeedbackMail= () => {
-		const email = 'recyclist.sprt@gmail.com';
-		const subject = encodeURIComponent('grocery composite feedback');
-
-	}
 	const [feedbackFlag, SetFeedbackFlag]= useState(initFeedbackFlag);
 	const [tickToggle, SetToggleTicked] = useState(initChecked);
 
@@ -45,7 +40,7 @@ export default function ListItem({ userItemStr, tickToggle: initChecked, grocery
 							key={index}
 							style={{
 								width: maxWidth - index * 15,
-								height: 17,
+								height: 15,
 								backgroundColor: colorsHex[color],
 								borderRadius: 19,
 								marginBottom: 20,

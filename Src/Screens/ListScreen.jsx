@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import ListItem from '../Components/ListItem';
 
 export default function ListScreen({ headerId, userID }) {
-	console.log("Hello 1");
+	// console.log("Hello 1");
 
 	const [groceryItems,SetGroceryItems] = useState([
 		{
@@ -72,10 +72,11 @@ export default function ListScreen({ headerId, userID }) {
 			"userFeedback": ""
 		}
 	]);
-
 	const [showJustTicked, SetShowJustTicked] = useState(false);
 	const [groceryInput, SetGroceryInput] = useState("");
 	const [userItemStr, SetSserItemStr] =useState("");
+	const navigation = useNavigation();
+
 
 
 	//const { headerId }= route.params; //to fetch the list items - use the header aggregation to show items
@@ -111,7 +112,7 @@ export default function ListScreen({ headerId, userID }) {
 
 							</TouchableOpacity>
 
-							<TouchableOpacity onLongPress={() => navigation.goBack()}>
+							<TouchableOpacity onPress={() => navigation.goBack()}>
 								<Image source={require('../../assets/icons/recycliSTLogo113.png')} style={styles.LogoImage} resizeMode='contain' />
 							</TouchableOpacity>
 						</View>
@@ -131,13 +132,12 @@ export default function ListScreen({ headerId, userID }) {
 					<View style={styles.addGroceryItem}>
 						<Image source={require('../../assets/icons/BlackPlus.png')} resizeMode='contain' style={{margin:10}}/>
 						<TextInput
-							key={userItemStr}
 							style={[styles.inputField]}
 							placeholderTextColor={"black"} 
 							placeholder={"הוסף פריט"}
 							value={userItemStr.toString()}
 							keyboardType='ascii-capable'
-							onChangeText={text => SetGroceryInput(userItemStr)}
+							onChangeText={(userItemStr) => {SetSserItemStr(userItemStr)}}
 						/>
 					</View>
 					<View style={styles.groceryList}>
@@ -156,11 +156,7 @@ export default function ListScreen({ headerId, userID }) {
 							))
 						}
 					</View>
-
-
-
 					{/*here the list is*/}
-
 
 				</SafeAreaView>
 
