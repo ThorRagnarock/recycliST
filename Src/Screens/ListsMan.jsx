@@ -4,13 +4,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { MenuProvider } from 'react-native-popup-menu';
+import { MenuProvider } from 'react-native-popup-menu'; ///
 import HamburgerMenu from '../Components/HamburgerMenu';
 import ListingsItem from '../Components/ListingItem';
 
 export default function ListsMan() {
 
-	const listingsData = [
+
+	const [listingsData, SetLListingData] = useState([
 		{
 			headerId: "00001",
 			pinned: true,
@@ -24,8 +25,7 @@ export default function ListsMan() {
 			listOrder: "1",
 			listColor: "#FF8A00",
 		}
-	];
-	
+	]);
 	const screenWidth = Dimensions.get('window').width;
 	// const screenHeight = Dimensions.get('window').width;
 	const navigation = useNavigation();
@@ -41,14 +41,11 @@ export default function ListsMan() {
 			toValue,
 			duration: 150, 															//VELOCITY???
 			easing: Easing.inOut(Easing.ease),  // Add this line
-
 			useNativeDriver: false,
 		}).start();
 	};
-
 	//Go to the server and return with this searched filed
 	const FetchSearchResutlts = (searchValue) => { Alert.alert('TODO:fetch resluts of ', searchValue) }
-
 	const CreateNewListing = (addListName) => {
 		Alert.alert(
 			'רשימה חדשה',
@@ -70,7 +67,7 @@ export default function ListsMan() {
 		SetAddListName('');//Nullifies the entry field
 	}
 	const DeleteListing = async (headerId, listName) => {
-		
+
 		Alert.alert(
 			'אשר מחיקה',
 			`למחוק את '${listName}'?`,
@@ -89,6 +86,7 @@ export default function ListsMan() {
 			]
 		);
 	}
+	const togglePinned = (headerId) => {}
 	return (
 		<View style={{ flex: 1, }}>
 			<LinearGradient
@@ -105,7 +103,6 @@ export default function ListsMan() {
 								<TouchableOpacity onPress={toggleDrawer}>
 									<Image source={require('../../assets/icons/hambungerIcon.png')} resizeMode='contain' />
 								</TouchableOpacity>
-
 							</View>
 							<Image source={require('../../assets/icons/recycliSTLogo113.png')} style={{ width: 60 }} resizeMode='contain' />
 						</View>
@@ -145,17 +142,26 @@ export default function ListsMan() {
 							</View>
 							<MenuProvider customStyles={{ menuProviderWrapper: [{ height: 350 }] }}>
 								<SafeAreaView style={[{ flex: 14, marginTop: 50 }]}>
-									{
-										listingsData.map((listing, index) => (
-											<ListingsItem key={index} {...listing} />
-										))
-									}
+									<View>
+										{
+											listingsData.filter(item => item.pinned).map((listing, index) => (
+												<ListingsItem key={index} {...listing} />
+											))
+										}
+									</View>
+									<View>
+										{
+											listingsData.filter(item => !item.pinned).map((listing, index) => (
+												<ListingsItem key={index} {...listing} />
+											))
+										}
+									</View>
+
 								</SafeAreaView>
 							</MenuProvider>
 						</View>
 					</SafeAreaView>
 				</ScrollView>
-
 
 				<Animated.View
 					style={{
@@ -194,11 +200,7 @@ export default function ListsMan() {
 	)
 }
 const styles = StyleSheet.create({
-	container: {},
-	backgroundGradient: {},
-	LogoImage: {},
-	inlineImage: {},
-	listsUtils: {},
+	container: {}, backgroundGradient: {}, LogoImage: {}, inlineImage: {}, listsUtils: {},
 
 	linearGradient: {
 		flex: 1,
@@ -246,25 +248,3 @@ const styles = StyleSheet.create({
 	},
 })
 
-
-
-{/**
-note that "Gimel@ABC.com" is a userID that supposed to be passed to the thing
-All the rest is returned from the DB
-
-
-  const collection = client.db("_recycliST").collection("shoppinglist");
-
-  collection.find({ "userID": "Gimel@ABC.com" }).sort({ "pinned": -1 }).toArray((err, docs) => {
-    if (err) {
-      console.error('Error fetching data:', err);
-    } else {
-      // Do something with the sorted documents
-      console.log(docs);
-    }
-  }) */}
-
-
-{/* <TouchableOpacity style={{ marginRight: 20 }} onPress={() => PinLatestList()}>
-		<Image source={require('../../assets/icons/pinned.png')} resizeMode='contain' />
-	</TouchableOpacity> */}
