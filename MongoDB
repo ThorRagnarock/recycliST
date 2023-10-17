@@ -1,4 +1,0 @@
-db.users.updateMany(
-  {}, 
-  { $rename: { "subscribeDate": "accountCreated" } }
-);
