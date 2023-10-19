@@ -1,0 +1,36 @@
+{
+  "name": "recyclist",
+  "version": "0.2.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "build": ""
+  },
+  "dependencies": {
+    "@react-native-community/datetimepicker": "6.7.3",
+    "@react-native-picker/picker": "2.4.8",
+    "@react-navigation/native": "^6.1.8",
+    "@react-navigation/stack": "^6.3.18",
+    "expo": "~48.0.15",
+    "expo-font": "~11.1.1",
+    "expo-linear-gradient": "~12.1.2",
+    "expo-splash-screen": "~0.18.2",
+    "expo-status-bar": "~1.4.4",
+    "react": "18.2.0",
+    "react-dom": "^18.2.0",
+    "react-native": "0.71.13",
+    "react-native-gesture-handler": "~2.9.0",
+    "react-native-popup-menu": "^0.16.1",
+    "react-native-reanimated": "~2.14.4",
+    "react-native-web": "~0.18.11",
+    "expo-application": "~5.1.1",
+    "expo-device": "~5.2.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  },
+  "private": true
+}
