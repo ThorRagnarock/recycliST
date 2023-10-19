@@ -1,1 +1,0 @@
-export const base_api = "https://recyclist.onrender.com/api"
