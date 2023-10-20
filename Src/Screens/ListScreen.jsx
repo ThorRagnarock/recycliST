@@ -76,7 +76,7 @@ export default function ListScreen({ headerId, userID }) {
 		}
 	]);
 	const [showJustTicked, SetShowJustTicked] = useState(false);
-	const [groceryInput, SetGroceryInput] = useState("");
+	// const [groceryInput, SetGroceryInput] = useState("");
 	const [userItemStr, SetSserItemStr] = useState("");
 	const navigation = useNavigation();
 
@@ -95,6 +95,9 @@ export default function ListScreen({ headerId, userID }) {
 			return item;
 		})
 		SetGroceryItems(updatedItem);
+	}
+	const EmptyCan = ()=>{
+		Alert.alert("TODO:Empty Can");
 	}
 	return (
 

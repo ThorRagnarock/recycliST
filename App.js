@@ -1,9 +1,10 @@
 
-import { useFonts } from 'expo-font';
+// import { useFonts } from 'expo-font';
 
+import * as Font from 'expo-font';
 //navigation stuff
 import 'react-native-gesture-handler';
-import * as React from 'react';
+import  React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -20,7 +21,8 @@ import RegNewAccount from './Src/Screens/RegNewAccount';
 import PersonalProfile from './Src/Screens/PersonalProfile';
 import DropDownScreen from './Src/Screens/DropDownScreen';// **
 import DropDownSearchStreet from './Src/Screens/DropDownSearchStreet';
-import AboutUs from './Src/Screens/AboutUs';// import DropDownMachine  from './Src/Screens/DropDownMachine';
+import AboutUs from './Src/Screens/AboutUs';
+// import DropDownMachine  from './Src/Screens/DropDownMachine';
 
 import DisplayBadges from './Src/Screens/DisplayBadges';
 import ListsMan from './Src/Screens/ListsMan';
@@ -33,12 +35,18 @@ const NavStack = createStackNavigator();
 
 export default function App() {
 
-  const [isLoaded] = useFonts({
-    "openSansReg": require('./assets/fonts/static/OpenSans-Regular.ttf'),
-    "openSansBold": require('./assets/fonts/static/OpenSans-Bold.ttf'),
-    "openSansLightItalic": require('./assets/fonts/static/OpenSans-LightItalic.ttf')
-  });
-  if (!isLoaded) return null;
+  const [fontLoaded, SetFontLoaded] = useState(false);
+
+    const loadFonts = async () => {
+    await Font.loadAsync({
+      'openSansReg': require('./assets/fonts/OpenSans-Regular.ttf'),
+      'openSansBold': require('./assets/fonts/OpenSans-Bold.ttf'),
+      'openSansLightItalic': require('./assets/fonts/OpenSans-LightItalic.ttf'),
+    });
+    SetFontLoaded(true);
+}
+useEffect(()=>{loadFonts()},[])
+  // if (!isLoaded) return null;
 
   return (
     <ContextProvider>

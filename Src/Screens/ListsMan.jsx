@@ -2,15 +2,16 @@ import { View, TouchableOpacity, StyleSheet, Image, Alert, TextInput, SafeAreaVi
 import React, { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+// import { createStackNavigator } from '@react-navigation/stack';
 
 import { MenuProvider } from 'react-native-popup-menu'; ///
 import HamburgerMenu from '../Components/HamburgerMenu';
 import ListingsItem from '../Components/ListingItem';
+// import App from '../../App';
 
 export default function ListsMan() {
 
-
+	console.log("Got into the list...");
 	const [listingsData, SetLListingData] = useState([
 		{
 			headerId: "00001",
@@ -66,10 +67,9 @@ export default function ListsMan() {
 		)
 		SetAddListName('');//Nullifies the entry field
 	}
-	const DeleteListing = async (headerId, listName) => {
-
+	const DeleteListing =  (headerId, listName) => {
 		Alert.alert(
-			'אשר מחיקה',
+			'אשר מחיקה',r
 			`למחוק את '${listName}'?`,
 			[
 				{ text: 'בטל', style: 'cancel', },
@@ -96,8 +96,9 @@ export default function ListsMan() {
 				locations={[0, 0.89]}
 				style={styles.linearGradient}
 			>
-				<ScrollView>
 					<SafeAreaView style={styles.container}>
+					<ScrollView>
+
 						<View style={styles.title}>
 							<View style={[styles.listSearch]}>
 								<TouchableOpacity onPress={toggleDrawer}>
@@ -113,9 +114,9 @@ export default function ListsMan() {
 									toggleAdd_Search ?
 										(
 											<View style={styles.listSearch}>
-												<Image source={require('../../assets/icons/magnifingGlassSearch.png')} style={{ marginRight: 10 }} />
+												<Image source={require('../../assets/icons/magnifingGlassSearch.png')} style={{ marginRight: 10, }} />
 												<TextInput
-													style={[styles.listsSearchBar,]}
+													style={[styles.listsSearchBar, {fontFamily: 'openSansReg'}]}
 													value={searchValue}
 													onChangeText={(searchValue) => { SetSearchValue(searchValue) }}
 													placeholder='חפש רשימות'
@@ -160,8 +161,9 @@ export default function ListsMan() {
 								</SafeAreaView>
 							</MenuProvider>
 						</View>
+						</ScrollView>
+
 					</SafeAreaView>
-				</ScrollView>
 
 				<Animated.View
 					style={{
@@ -222,7 +224,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		textAlign: 'right',
 		fontSize: 16,
-		fontFamily: 'openSansReg',
+		// fontFamily: 'openSansReg',
 		marginRight: 5,
 	},
 	searchAndAddBar: {

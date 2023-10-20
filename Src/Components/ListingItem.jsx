@@ -19,7 +19,7 @@ const ListingsItem = ({ headerId, listName, pinned: isPinned}) => {
 			{//TODO: add the pinned to the top of the list...
 				pinned &&  <Image source={require('../../assets/icons/pinned.png')} style={{ marginRight: 10 }} />
 			}
-			<Text style={styles.textStyle}>{listName || "רשימה חדשה"}</Text>
+			<Text style={[{fontFamily: 'openSansReg'}, styles.textStyle,  ]}>{listName || "רשימה חדשה"}</Text>
 
 			<ContextMenu />
 			{/** add params that are for the context menu */}
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		textAlign: 'right',
 		fontSize: 16,
-		fontFamily: 'openSansReg',
 		marginRight: 10,
 	},
 	menuTrigger: {
