@@ -110,11 +110,10 @@ export default function ListScreen({ headerId, userID }) {
 				locations={[0, 0.89]}
 				style={styles.linearGradient}
 			>
-				{/* { menuProviderWrapper: [{  height: 50 }] } */}
-				{/* style={{ position: 'absolute', zIndex: 9999, height: 350, width: 150 }}  */}
+				
 				<SafeAreaView style={styles.safeView}>
 					<ScrollView>
-						<MenuProvider customStyles={{ menuProviderWrapper: [{ height: 350 }] }}>
+						<MenuProvider customStyles={{ menuProviderWrapper: [{ height: 350 }] }} skipInstanceCheck>
 
 
 

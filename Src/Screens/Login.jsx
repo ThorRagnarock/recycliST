@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Alert, StyleSheet, Image, Pressable, Switch, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, Alert, StyleSheet, Image, Pressable, Switch, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
@@ -20,8 +20,8 @@ export default function Login() {
 		Alert.alert("TODO: Submit")
 	}
 	return (
-		<View style={styles.container}>
-			<TouchableOpacity onLongPress={() => navigation.navigate('SignInScreen')}>
+		<SafeAreaView style={styles.container}>
+			<TouchableOpacity onPress={() => navigation.navigate('SignInScreen')}>
 				<Image
 					style={styles.splashLogo} resizeMode='contain' source={require('../../assets/icons/recycliSTLogo113.png')} />
 			</TouchableOpacity>
@@ -69,7 +69,7 @@ export default function Login() {
 				</Pressable>
 
 			</View>
-		</View>
+		</SafeAreaView>
 	)
 }
 

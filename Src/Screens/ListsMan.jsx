@@ -141,7 +141,7 @@ export default function ListsMan() {
 										)
 								}
 							</View>
-							<MenuProvider customStyles={{ menuProviderWrapper: [{ height: 350 }] }}>
+							<MenuProvider customStyles={{ menuProviderWrapper: [{ height: 350 }] }} skipInstanceCheck>
 								<SafeAreaView style={[{ flex: 14, marginTop: 50 }]}>
 									<View>
 										{

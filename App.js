@@ -51,7 +51,7 @@ useEffect(()=>{loadFonts()},[])
   return (
     <ContextProvider>
       <NavigationContainer>{/* ListsMan */}
-        <NavStack.Navigator initialRouteName='ListsMan' screenOptions={{ headerShown: false }}>
+        <NavStack.Navigator initialRouteName='Splash' screenOptions={{ headerShown: false }}>
           {/* PersonalProfile */}
           <NavStack.Screen name='Splash' component={Splash} />
           <NavStack.Screen name='OnBoarding' component={OnBoarding} />
