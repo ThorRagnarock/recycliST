@@ -3,14 +3,14 @@ import * as Font from 'expo-font';
 
 //navigation stuff
 import 'react-native-gesture-handler';
+import { StyleSheet } from 'react-native';
+
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-
 import ContextProvider from './Src/Context/ContextProvider';
 
-import { StyleSheet } from 'react-native';
 
 import Login from './Src/Screens/Login';
 import Splash from './Src/Screens/Splash';
@@ -44,7 +44,7 @@ export default function App() {
         'openSansLightItalic': require('./assets/fonts/OpenSans-LightItalic.ttf'),
       });
       SetFontLoaded(true);
-      if (!fontLoaded) {
+      if (fontLoaded) {
         console.error("Font loading has failed.");
       return null;
       }

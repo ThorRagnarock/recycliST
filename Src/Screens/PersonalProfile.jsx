@@ -24,6 +24,11 @@ export default function PersonalProfile() {
 		SetOptionPicker(false);
 		SetEditing(false); Alert.alert("עריכה הסתיימה")
 	}
+	
+	const now = new Date();
+
+	// //this.accountCreated = ;
+	// SetSubscriberDate (`${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
 
 	// let mockupSubscribeDate = new Date(2023, 6, 18); //remember january = 0
 	// /*#  TODO!!!  #*/const [subscribeDate, SetSubscriberDate] = useState(mockupSubscribeDate); //new Date() - TODO!!!!
@@ -44,9 +49,6 @@ export default function PersonalProfile() {
 
 		points, SetPoints,
 		shoppingLists, SetShoppingLists,
-		//achievements, SetAchievements,	//not sure about that here
-		//budges, SetBudges,				//not sure about that here
-
 		currentUser, SetCurrentUser,
 		loginer,
 		logOuter } = useContext(UserContext2);
@@ -63,7 +65,6 @@ export default function PersonalProfile() {
 		status: status,
 		subscribeDate: subscribeDate,
 	})
-
 	const [textVisible, SetTextVisible] = useState(false);
 	const timeRef = React.useRef(null);
 	const [animatedFadeout] = useState(new Animated.Value(1));
@@ -144,7 +145,7 @@ export default function PersonalProfile() {
 		}
 	}
 	async function HandleImageUpload() {
-		console.log("Image upload button");
+		// console.log("Image upload button");
 		let { permissionStatus } = await ImagePicker.getMediaLibraryPermissionsAsync();
 		if (permissionStatus !== 'granted' && !hasAlerted) {
 			let perrmissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -170,15 +171,19 @@ export default function PersonalProfile() {
 			quality: 0.1,
 			base64: true,
 		});
+		if (!result.canceled) {
+			// const base64Image = await toBase64(result.uri);
+			SetProfileImage(result.assets[0]);
+		}
 		console.log(Object.keys(result.assets[0]));
 		// console.log(result.assets[0].base64);
 		// console.log(result.assets);
 
 
-		if (!result.canceled) {
-			// const base64Image = await toBase64(result.uri);
-			SetProfileImage(result.assets[0]);
-		}
+		// if (!result.canceled) {
+		// 	// const base64Image = await toBase64(result.uri);
+		// 	SetProfileImage(result.assets[0]);
+		// }
 	}
 	return (
 		<View style={styles.backgroundGradient}>
@@ -206,7 +211,6 @@ export default function PersonalProfile() {
 						</View>
 						{/* Image and Name */}
 
-
 						<View style={[styles.wrapper, styles.ImageAndName,]}>
 							<View style={[styles.profilePictureView]}>
 								<Pressable style={[styles.changeProfilePicBtn]} onPress={() => HandleImageUpload()}>
@@ -214,14 +218,10 @@ export default function PersonalProfile() {
 								</Pressable>
 								<View style={[styles.profilePicContainer]}>
 									{
-										profileImage == "" 
-										? <Image source={require('../../assets/icons/profilePicture.png')} style={[styles.ProfilePicture]} />
-										: <Image source={{uri:profileImage.uri}} style={[styles.ProfilePicture]} />
+										profileImage == ""
+											? <Image source={require('../../assets/icons/profilePicture.png')} style={[styles.ProfilePicture]} />
+											: <Image source={{ uri: profileImage.uri }} style={[styles.ProfilePicture]} />
 									}
-
-
-									
-
 
 								</View>
 							</View>
@@ -230,7 +230,7 @@ export default function PersonalProfile() {
 								<Text style={{ fontFamily: 'openSansReg', fontSize: 12, color: '#7394E7' }}>חבר החל מ{formData.subscribeDate.toLocaleDateString('he-IL', { month: 'long', year: 'numeric' })}</Text>
 							</View>
 						</View>
-						
+
 						{/* d */}
 						<View style={[styles.formFieldsContainer, styles.wrapper]}>
 							<View style={[styles.addressDetails, {}]}>
@@ -335,10 +335,6 @@ export default function PersonalProfile() {
 									/>
 									<Text style={styles.generalSubtitle}>אימייל</Text>
 								</View>
-
-
-
-
 							</View>
 						</View>
 
