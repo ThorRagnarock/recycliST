@@ -9,16 +9,20 @@ import {
 	FlatList, 
 	Pressable 
 } from 'react-native';
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { UserContext2 } from '../Context/ContextProvider'
 
 
-export default function DropDownScreen({ navigation}) {
+export default function DropDownScreen({ navigation }) {
 	const { residence, SetResidence } = useContext(UserContext2);
 	const [input, SetInput] = useState("");
 	const [suggestionsList, SetSuggestionsList] = useState(null);	// = = "data"
 	const [selectedItem, SetSelectedItem] = useState(null);
-	const [showList, SetShowList]=useState(false)
+	const [showList, SetShowList] = useState(false);
+	const [allCities, SetAllCities] = useState([]);
+
+
+	useEffect(()=>{},[])
 
 	const onChangeText = useCallback(async (text) => {
 		SetInput(text);

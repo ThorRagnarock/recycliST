@@ -1,24 +1,34 @@
 import { View, Text, TextInput, Alert, StyleSheet, Image, Pressable, Switch, TouchableOpacity, SafeAreaView } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
-
+import {UserContext2} from '../Context/ContextProvider';
 
 // import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
 
 export default function Login() {
-	const [inputEmail, SetInputEmail] = useState('');
+	const { loginer } = useContext(UserContext2);
+
+	const [inputEmail, SetInputEmail] = useState(null);
 	const [inputPassword, SetInputPassword] = useState('');
-	const [switchEnabled, SetSwitchEnabled] = useState(true);
+	const [switchEnabled, SetSwitchEnabled] = useState(true); //remember login details
 
 	const onToggleSwitch = () => { SetSwitchEnabled(previousState => !previousState) };
 	const navigation = useNavigation();
-
 	const resetPassword = () => {
 		Alert.alert('TODO: password reset');
 	}
-	const submitDetails = () => {
-		Alert.alert("TODO: Submit")
+
+	// const submitDetails = () => {
+	// 	Alert.alert("TODO: Submit")
+	// }
+	//////////////////////////////////////////////////////////////////////
+	async function submitDetails(event) {
+		event.preventDefault(); //I don't know if it nessary 
+		console.log("Calling the contextProvider>loginer> function...");
+		if (await loginer(inputEmail, inputPassword)) {navigation.navigate('ListsMan')};
 	}
+	//////////////////////////////////////////////////////////////////////
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<TouchableOpacity onPress={() => navigation.navigate('SignInScreen')}>
@@ -78,16 +88,12 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#6d8fe6',
 		alignItems: 'center',
-		//justifyContent: 'center'
 	},
 	splashLogo: {
 		marginTop: '15%',
 		marginBottom: 15,
 	},
-	content: {
-
-		// alignItems: 'center'
-	},
+	content: {	},
 	InputContainer: {
 		flexDirection: 'row',
 		alignItems: 'center', //doens't help much
@@ -96,7 +102,6 @@ const styles = StyleSheet.create({
 	iconStyle: {
 		zIndex: 2,
 		marginLeft: 20,
-
 	},
 	inputBox: {
 		zIndex: 1,
@@ -105,7 +110,6 @@ const styles = StyleSheet.create({
 		width: 330,
 		marginLeft: -40,
 		paddingLeft: 45,
-
 	},
 	boldCentered16: {
 		fontFamily: 'openSansBold',
@@ -127,8 +131,6 @@ const styles = StyleSheet.create({
 		marginLeft: 12,
 	},
 	regRegistr: {
-		// alignItems:'center',
-		// justifyContent:'center',
 		backgroundColor: '#fff',
 		width: 221,
 		height: 39,
@@ -149,3 +151,17 @@ const styles = StyleSheet.create({
 		marginTop: 25,
 	}
 })
+
+
+
+		// let user = { inputEmail, inputPassword };
+		// let res = await fetch('https://recyclistserver.onrender.com/api/users/login', {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		Accept: "application/json",
+		// 		"Content-type": "application/json",
+		// 	},
+		// 	body: JSON.stringify(user)
+		// });
+		// let data = await res.json();
+		// console.log(data);

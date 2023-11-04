@@ -1,19 +1,20 @@
 import { View, Text, StyleSheet, Pressable, TextInput } from 'react-native'
 import React, { useState, useContext } from 'react'
 import { UserContext2 } from '../Context/ContextProvider'
+import { IsExistingUser } from '../../utils/IsExistingUser';
 
 export default function RegMail({ nextStep }) {
 	const { email, SetEmail } = useContext(UserContext2);
-	const [warningSwitch, SetWrningSwitch] = useState(false);
-	const confirmAndNextStep = () => {
+	const [legalEmailSwitch, SetlegalEmailSwitch] = useState(false);
+	const [existingEmailSwitch, SetExistingEmailSwitch] = useState(false);
+	const confirmAndNextStep = async () => {
+		console.log("button pressed");
 		const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
-		if (!emailRegEx.test(email)) {
-			SetWrningSwitch(true);
-		}
-		else {
-			nextStep(email);
-		}
+		console.log("emailRegex variable created");
+		// SetExistingEmailSwitch()
+		if (!emailRegEx.test(email)) { SetlegalEmailSwitch(true); }
+		else if (await IsExistingUser(email)) { SetExistingEmailSwitch(true); }
+		else { nextStep(email); }
 	}
 	return (
 		<View style={styles.inputFieldFlex}>
@@ -24,7 +25,7 @@ export default function RegMail({ nextStep }) {
 				value={email}
 				onChangeText={(email) => { SetEmail(email) }}
 				keyboardType='email-address'
-				
+
 			/>
 			<Text style={styles.infoConditions}>
 				תתבקש לאשר את כתובת המייל
@@ -34,11 +35,8 @@ export default function RegMail({ nextStep }) {
 				<Pressable onPress={confirmAndNextStep} style={styles.regRegistr}>{/* //that's where the next step takes place */}
 					<Text style={styles.BtnText}>הבא</Text>
 				</Pressable>
-				{
-					warningSwitch ?
-					<Text style={styles.dataConditions}>נא להזין כתובת אי מייל חוקית</Text>:null
-					//or: that mail is already on our database. Sign In
-				}
+				{legalEmailSwitch && <Text style={styles.dataConditions}>נא להזין כתובת אי מייל חוקית</Text>}
+				{existingEmailSwitch && <Text style={styles.dataConditions}>אימייל זה כבר נמצא בשימוש</Text>}
 			</View>
 		</View>
 	)
@@ -101,8 +99,3 @@ const styles = StyleSheet.create({
 		fontSize: 13,
 	},
 })
-
-
-
-		// justifyContent: 'center'//vertical align
-		// justifyContent: 'center', | textAlign: 'left', | flexDirection:'row', | alignSelf

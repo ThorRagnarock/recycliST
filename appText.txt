@@ -1,9 +1,11 @@
 
+// import { useFonts } from 'expo-font';
+
 import * as Font from 'expo-font';
 
 //navigation stuff
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react';
+import  React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -27,40 +29,25 @@ import DisplayBadges from './Src/Screens/DisplayBadges';
 import ListsMan from './Src/Screens/ListsMan';
 import ListScreen from './Src/Screens/ListScreen';
 
+// SplashScreen.preventAutoHideAsync();
+// const navigation  = useNavigation();
 const NavStack = createStackNavigator();
 
 
 export default function App() {
 
-  console.log("Is inside the app.js");
-  
   const [fontLoaded, SetFontLoaded] = useState(false);
 
-  const loadFonts = async () => {
-    try {
-      await Font.loadAsync({
-        'openSansReg': require('./assets/fonts/OpenSans-Regular.ttf'),
-        'openSansBold': require('./assets/fonts/OpenSans-Bold.ttf'),
-        'openSansLightItalic': require('./assets/fonts/OpenSans-LightItalic.ttf'),
-      });
-      SetFontLoaded(true);
-      if (!fontLoaded) {
-        console.error("Font loading has failed.");
-      return null;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  useEffect(() => {
-     loadFonts();
-    }, [])
-  
-
-
-
+    const loadFonts = async () => {
+    await Font.loadAsync({
+      'openSansReg': require('./assets/fonts/OpenSans-Regular.ttf'),
+      'openSansBold': require('./assets/fonts/OpenSans-Bold.ttf'),
+      'openSansLightItalic': require('./assets/fonts/OpenSans-LightItalic.ttf'),
+    });
+    SetFontLoaded(true);
+}
+useEffect(()=>{loadFonts()},[])
   // if (!isLoaded) return null;
-  // LogBox.ignoreLogs(['shadow set but cannot calculate shadow efficiently']);
 
   return (
     <ContextProvider>

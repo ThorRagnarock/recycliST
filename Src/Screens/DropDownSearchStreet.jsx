@@ -9,7 +9,7 @@ import {
 	Pressable, 
 	Keyboard,
 } from 'react-native'
-import React, { useCallback, useState, useContext} from 'react'
+import React, { useCallback, useState, useContext, useEffect} from 'react'
 import { UserContext2 } from '../Context/ContextProvider'
 
 
@@ -22,7 +22,8 @@ export default function DropDownSearchStreet({navigation}) {
 	const [data, SetData] = useState(null); // = ="suggestionsList"
 	const [loading, SetLoading] = useState(false);
 	const [selectedItem, SetSelectedItem] = useState(null);
-	const [showList, SetShowList]=useState(false)
+	const [showList, SetShowList]=useState(false);
+
 
 	const onChangeText = useCallback(async (text) => {
 		SetInput(text);

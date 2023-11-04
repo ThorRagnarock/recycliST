@@ -1,19 +1,19 @@
-import { View, Text, StyleSheet, Image, Pressable, SafeAreaView, Alert, Dimensions} from 'react-native'
+import { View, Text, StyleSheet, Image, Pressable, SafeAreaView, Alert, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-
-
-import React, { useState, } from 'react';
+import React, { useState, useContext } from 'react';
 import { sendEmail } from '../../utils/Feedback';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
+import { UserContext2 } from '../Context/ContextProvider';
+
+
 export default function HamburgerMenu() {
-	const alertMsgForCheck = () => { Alert.alert('your interaction seems to be working ok') }
-
-	{/** MAIL FUNC USED TO BE HERE, also imported *  and linking */}
-
+	const { logOuter } = useContext(UserContext2);
+	const alertMsgForCheck = () => { Alert.alert('TODO: LOGOUT') }  //
+	{/** MAIL FUNC USED TO BE HERE, also imported *  and linking */ }
 	const navigation = useNavigation();
 	return (
 		<View style={styles.container}>
@@ -40,8 +40,6 @@ export default function HamburgerMenu() {
 								style={{ width: 27 }} resizeMode='contain' />
 						</Pressable>
 					</View>
-
-
 					<View style={styles.menuItem}>
 						<Pressable onPress={() => navigation.navigate('DisplayBadges')}		//Link To PERSONAL
 							style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -51,9 +49,6 @@ export default function HamburgerMenu() {
 								style={{ width: 27 }} resizeMode='contain' />
 						</Pressable>
 					</View>
-
-
-
 					<View style={styles.menuItem}>
 						<Pressable onPress={() => navigation.navigate('AboutUs')}		//Link To AboutUs	
 							style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -64,7 +59,7 @@ export default function HamburgerMenu() {
 						</Pressable>
 					</View>
 					<View style={styles.menuItem}>
-					<Pressable onPress={() => sendEmail()} //Open mail server
+						<Pressable onPress={() => sendEmail()} //Open mail server
 							style={{ flexDirection: 'row', alignItems: 'center' }}
 						>
 							<Text style={styles.hbrgrItemText}>פניה</Text>
@@ -72,9 +67,17 @@ export default function HamburgerMenu() {
 								style={{ width: 27 }} resizeMode='contain' />
 						</Pressable>
 					</View>
-
+					{/** LOG OUT !!!! */}
+					<View style={styles.menuItem}>
+						<Pressable onPress={() => logOuter()} //TODOIST
+							style={{ flexDirection: 'row', alignItems: 'center' }}
+						>
+							<Text style={styles.hbrgrItemText}>להתנתק</Text>
+							<Image source={require('../../assets/icons/Logout.png')}
+								style={{ width: 27 }} resizeMode='contain' />
+						</Pressable>
+					</View>
 				</SafeAreaView>
-
 				{/* <Text>HamburgerMenu</Text> */}
 			</LinearGradient>
 		</View>

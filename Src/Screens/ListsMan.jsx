@@ -1,15 +1,22 @@
 import { View, TouchableOpacity, StyleSheet, Image, Alert, TextInput, SafeAreaView, Dimensions, ScrollView, Animated, Easing } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 // import { createStackNavigator } from '@react-navigation/stack';
+import { UserContext2 } from '../Context/ContextProvider';
 
 import { MenuProvider } from 'react-native-popup-menu'; ///
 import HamburgerMenu from '../Components/HamburgerMenu';
 import ListingsItem from '../Components/ListingItem';
 // import App from '../../App';
 
+
+
+
+
 export default function ListsMan() {
+
+	const { profileImage,email, name,  } = useContext(UserContext2);
 
 	console.log("Got into the list...");
 	const [listingsData, SetLListingData] = useState([
