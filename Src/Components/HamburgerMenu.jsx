@@ -1,20 +1,19 @@
 import { View, Text, StyleSheet, Image, Pressable, SafeAreaView, Alert, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { sendEmail } from '../../utils/Feedback';
+import { UserContext2 } from '../Context/ContextProvider';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-
-import { UserContext2 } from '../Context/ContextProvider';
 
 
 export default function HamburgerMenu() {
 	const { logOuter } = useContext(UserContext2);
-	const alertMsgForCheck = () => { Alert.alert('TODO: LOGOUT') }  //
 	{/** MAIL FUNC USED TO BE HERE, also imported *  and linking */ }
 	const navigation = useNavigation();
+
+	const handleLogout = () => { logOuter(() => navigation.navigate('SignInScreen')) }
 	return (
 		<View style={styles.container}>
 			<LinearGradient
@@ -69,8 +68,8 @@ export default function HamburgerMenu() {
 					</View>
 					{/** LOG OUT !!!! */}
 					<View style={styles.menuItem}>
-						<Pressable onPress={() => logOuter()} //TODOIST
-							style={{ flexDirection: 'row', alignItems: 'center' }}
+						<Pressable onPress={() => handleLogout()} //TODOIST
+							style={{ flexDirection: 'row', alignItems: 'centeer' }}
 						>
 							<Text style={styles.hbrgrItemText}>להתנתק</Text>
 							<Image source={require('../../assets/icons/Logout.png')}

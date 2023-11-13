@@ -24,12 +24,12 @@ export default function SignInScreen() {
 				  <Pressable style={styles.regRegistr} onPress={Registration}>
 					  <Text style={styles.BtnText}>הרשמה בחינם</Text>
 				  </Pressable>
-				  <Pressable style={styles.regOptsBlack} onPress={StamKishkoosh}>
+				  {/* <Pressable style={styles.regOptsBlack} onPress={StamKishkoosh}>
 					  <Text style={styles.whiteBoldtxt}>Ok Google</Text>
 				  </Pressable>
 				  <Pressable style={styles.regOptsBlack} onPress={StamKishkoosh}>
 					  <Text style={styles.whiteBoldtxt}>Hi Siri</Text>
-				  </Pressable>
+				  </Pressable> */}
 				  <Pressable onPress={Logintration} style={{ marginTop: 15 }}>
 					  <Text style={styles.whiteBoldtxt}>כניסה לרשומים</Text>
 				  </Pressable>

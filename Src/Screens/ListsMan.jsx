@@ -11,9 +11,6 @@ import ListingsItem from '../Components/ListingItem';
 // import App from '../../App';
 
 
-
-
-
 export default function ListsMan() {
 
 	const { profileImage,email, name,  } = useContext(UserContext2);
@@ -76,7 +73,7 @@ export default function ListsMan() {
 	}
 	const DeleteListing =  (headerId, listName) => {
 		Alert.alert(
-			'אשר מחיקה',r
+			'אשר מחיקה',
 			`למחוק את '${listName}'?`,
 			[
 				{ text: 'בטל', style: 'cancel', },

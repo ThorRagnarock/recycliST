@@ -5,6 +5,11 @@ const UserContext = React.createContext();
 export default UserContext;
 
 
+I thing that this piece of code don't serve me at all 
+me or the code itself
+I think it's just text 
+
+
 // import { createContext } from 'react';
 
 // const UserContext = createContext();

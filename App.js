@@ -9,7 +9,6 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import ContextProvider from './Src/Context/ContextProvider';
 
 
 import Login from './Src/Screens/Login';
@@ -22,6 +21,7 @@ import DropDownScreen from './Src/Screens/DropDownScreen';// **
 import DropDownSearchStreet from './Src/Screens/DropDownSearchStreet';
 import AboutUs from './Src/Screens/AboutUs';
 // import DropDownMachine  from './Src/Screens/DropDownMachine';
+import ContextProvider from './Src/Context/ContextProvider';
 
 import DisplayBadges from './Src/Screens/DisplayBadges';
 import ListsMan from './Src/Screens/ListsMan';
@@ -32,7 +32,7 @@ const NavStack = createStackNavigator();
 
 export default function App() {
 
-  console.log("Is inside the app.js");
+  // console.log("Is inside the app.js");
   
   const [fontLoaded, SetFontLoaded] = useState(false);
 
@@ -43,8 +43,8 @@ export default function App() {
         'openSansBold': require('./assets/fonts/OpenSans-Bold.ttf'),
         'openSansLightItalic': require('./assets/fonts/OpenSans-LightItalic.ttf'),
       });
-      SetFontLoaded(true);
-      if (fontLoaded) {
+      await SetFontLoaded(true);
+      if (!fontLoaded) {
         console.error("Font loading has failed.");
       return null;
       }
@@ -83,6 +83,8 @@ export default function App() {
           <NavStack.Screen name='AboutUs' component={AboutUs} />
           <NavStack.Screen name='DisplayBadges' component={DisplayBadges} />
           <NavStack.Screen name='ListScreen' component={ListScreen} />
+
+          {/* <NavStack.Screen name='ContextProvider' component={ContextProvider} /> */}
         </NavStack.Navigator>
 
       </NavigationContainer>

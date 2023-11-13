@@ -27,13 +27,6 @@ export default function PersonalProfile() {
 	
 	const now = new Date();
 
-	// //this.accountCreated = ;
-	// SetSubscriberDate (`${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
-
-	// let mockupSubscribeDate = new Date(2023, 6, 18); //remember january = 0
-	// /*#  TODO!!!  #*/const [subscribeDate, SetSubscriberDate] = useState(mockupSubscribeDate); //new Date() - TODO!!!!
-
-	//{ name, email, password, recycPrefs, birthDate, residence, status, profileImage:profileImage.base64 }
 	const {
 		name, SetName,
 		email, SetEmail,
@@ -45,26 +38,10 @@ export default function PersonalProfile() {
 		birthDate, SetBirthDate,
 		profileImage, SetProfileImage,
 
-		subscribeDate, SetSubscriberDate,
+		subscribeDate 
+	} = useContext(UserContext2);
 
-		points, SetPoints,
-		shoppingLists, SetShoppingLists,
-		currentUser, SetCurrentUser,
-		loginer,
-		logOuter } = useContext(UserContext2);
-
-	const formData = ({
-		name: name,
-
-		email: email,
-		password: password,
-		recycPrefs: recycPrefs,
-		birthDate: birthDate,
-
-		residence: residence,
-		status: status,
-		subscribeDate: subscribeDate,
-	})
+	
 	const [textVisible, SetTextVisible] = useState(false);
 	const timeRef = React.useRef(null);
 	const [animatedFadeout] = useState(new Animated.Value(1));
@@ -226,8 +203,8 @@ export default function PersonalProfile() {
 								</View>
 							</View>
 							<View style={[styles.nameAndGreeting]}>
-								<Text style={{ fontFamily: 'openSansBold', fontSize: 14.5 }}>היי, {formData.name}</Text>
-								<Text style={{ fontFamily: 'openSansReg', fontSize: 12, color: '#7394E7' }}>חבר החל מ{formData.subscribeDate.toLocaleDateString('he-IL', { month: 'long', year: 'numeric' })}</Text>
+								<Text style={{ fontFamily: 'openSansBold', fontSize: 14.5 }}>היי, {name}</Text>
+								<Text style={{ fontFamily: 'openSansReg', fontSize: 12, color: '#7394E7' }}>חבר החל מ{subscribeDate.toLocaleDateString('he-IL', { month: 'long', year: 'numeric' })}</Text>
 							</View>
 						</View>
 
@@ -323,18 +300,6 @@ export default function PersonalProfile() {
 								</View>
 
 
-
-								<View style={[styles.verticalFormItem, { zIndex: 1 }]}>
-									<TextInput
-										style={[styles.textBoxStyle, { width: 210, height: 1000 }]}
-										value={profileImage?.base64}
-										editable={Editing}
-										// onChangeText={() => Alert.alert('TODO: should kept locked')}
-										multiline
-
-									/>
-									<Text style={styles.generalSubtitle}>אימייל</Text>
-								</View>
 							</View>
 						</View>
 
@@ -491,3 +456,13 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 	},
 })
+
+
+
+	// //this.accountCreated = ;
+	// SetSubscriberDate (`${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
+
+	// let mockupSubscribeDate = new Date(2023, 6, 18); //remember january = 0
+	// /*#  TODO!!!  #*/const [subscribeDate, SetSubscriberDate] = useState(mockupSubscribeDate); //new Date() - TODO!!!!
+
+	//{ name, email, password, recycPrefs, birthDate, residence, status, profileImage:profileImage.base64 }

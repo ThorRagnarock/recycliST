@@ -10,6 +10,7 @@ export default function RegMail({ nextStep }) {
 	const confirmAndNextStep = async () => {
 		console.log("button pressed");
 		const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+		
 		console.log("emailRegex variable created");
 		// SetExistingEmailSwitch()
 		if (!emailRegEx.test(email)) { SetlegalEmailSwitch(true); }
@@ -47,9 +48,7 @@ const styles = StyleSheet.create({
 		color: '#000',
 		fontFamily: 'openSansReg',
 		textAlign: 'right',
-
 		fontSize: 15,
-
 		marginBottom: 5,
 	},
 	inputFieldFlex: {
@@ -59,18 +58,14 @@ const styles = StyleSheet.create({
 	},
 	basicGrayInputBox: {
 		backgroundColor: '#D9D9D9',
-
 		height: 40,
 		width: 330,
-
 		marginBottom: 5,
 	},
 	infoConditions: {
 		color: '#fff',
-
 		fontFamily: 'openSansReg',
 		textAlign: 'right',
-
 		fontSize: 13,
 		// marginBottom:5,
 	},

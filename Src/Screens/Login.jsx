@@ -1,31 +1,55 @@
 import { View, Text, TextInput, Alert, StyleSheet, Image, Pressable, Switch, TouchableOpacity, SafeAreaView } from 'react-native'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {UserContext2} from '../Context/ContextProvider';
 
-// import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
-
 export default function Login() {
-	const { loginer } = useContext(UserContext2);
-
-	const [inputEmail, SetInputEmail] = useState(null);
-	const [inputPassword, SetInputPassword] = useState('');
+	const { currentUser, SetCurrentUser, handleActiveMember } = useContext(UserContext2);
+	const [email, SetEmail] = useState('');
+	const [password, SetPassword] = useState('');
+	const [ togglePasswordVisibility, SetTogglePasswordVisibility ]=useState(true);
 	const [switchEnabled, SetSwitchEnabled] = useState(true); //remember login details
 
 	const onToggleSwitch = () => { SetSwitchEnabled(previousState => !previousState) };
+	const onVisibilitySwitch = () => { SetTogglePasswordVisibility(prevState => !prevState)}
 	const navigation = useNavigation();
 	const resetPassword = () => {
 		Alert.alert('TODO: password reset');
 	}
 
-	// const submitDetails = () => {
-	// 	Alert.alert("TODO: Submit")
-	// }
+	useEffect(()=>{
+		if(currentUser){
+			console.log("current user been updated: ", currentUser.email);
+			navigation.navigate('ListsMan');
+		}
+	},[currentUser])
 	//////////////////////////////////////////////////////////////////////
-	async function submitDetails(event) {
-		event.preventDefault(); //I don't know if it nessary 
-		console.log("Calling the contextProvider>loginer> function...");
-		if (await loginer(inputEmail, inputPassword)) {navigation.navigate('ListsMan')};
+	async function submitDetails() {
+		// console.log("Email and password entered: ", currentUser.email, currentUser.password );
+		
+		let loginUser = { email, password };
+		console.log("1. contextProvider's loginer: server calling...");
+
+		let res = await fetch('https://recyclistserver.onrender.com/api/users/login', { //
+			method: 'POST',
+			headers: {
+				Accept: "application/json",
+				"Content-type": "application/json",
+			},
+			body: JSON.stringify(loginUser)
+		})
+		let data = await res.json();
+		console.log(res.status);
+		if (res.status == 200) {
+			await handleActiveMember(data, switchEnabled);
+			// await SetCurrentUser(data);
+			return true;
+		} else {
+			console.warn("login error...");
+			return false;
+		}
+		// if (loginFeedback) {}
+		// else console.log("false details");
 	}
 	//////////////////////////////////////////////////////////////////////
 
@@ -43,21 +67,24 @@ export default function Login() {
 					<Image source={require('../../assets/icons/envelopIcon.png')} style={styles.iconStyle} />
 					<TextInput
 						style={styles.inputBox}
-						onChangeText={(email) => { SetInputEmail(email) }}
-						value={inputEmail}
+						onChangeText={(email) => { SetEmail(email) }}
+						value={email}
 						keyboardType="email-address"
 					/>
 				</View>
 				<Text style={styles.regular15}>{"\n"}סיסמה</Text>
 				<View style={styles.InputContainer}>
-					<Image source={require('../../assets/icons/eyeCrossIcon.png')} style={styles.iconStyle} />
+					<TouchableOpacity onPress={()=>onVisibilitySwitch()}>
+						<Image resizeMode='contain' source={require('../../assets/icons/eyeCrossIcon.png')} style={styles.iconStyle} />
+					</TouchableOpacity>
 					<TextInput
-						onChangeText={(password) => { SetInputPassword(password) }}
+						onChangeText={(password) => { SetPassword(password) }}
 
 						style={styles.inputBox}
-						value={inputPassword}
+						value={password}
+
 						keyboardType="visible-password"
-					// secureTextEntry
+						secureTextEntry={togglePasswordVisibility}
 					/>
 				</View>
 
@@ -93,7 +120,6 @@ const styles = StyleSheet.create({
 		marginTop: '15%',
 		marginBottom: 15,
 	},
-	content: {	},
 	InputContainer: {
 		flexDirection: 'row',
 		alignItems: 'center', //doens't help much
@@ -104,7 +130,7 @@ const styles = StyleSheet.create({
 		marginLeft: 20,
 	},
 	inputBox: {
-		zIndex: 1,
+		zIndex: -1000,
 		height: 40,
 		backgroundColor: '#D9D9D9',
 		width: 330,
@@ -151,17 +177,3 @@ const styles = StyleSheet.create({
 		marginTop: 25,
 	}
 })
-
-
-
-		// let user = { inputEmail, inputPassword };
-		// let res = await fetch('https://recyclistserver.onrender.com/api/users/login', {
-		// 	method: 'POST',
-		// 	headers: {
-		// 		Accept: "application/json",
-		// 		"Content-type": "application/json",
-		// 	},
-		// 	body: JSON.stringify(user)
-		// });
-		// let data = await res.json();
-		// console.log(data);
